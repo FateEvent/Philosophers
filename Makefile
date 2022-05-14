@@ -6,7 +6,7 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/05/06 15:39:07 by faventur         ###   ########.fr        #
+#    Updated: 2022/05/14 15:07:53 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(NAME): $(OBJS)
 	@rm $(OBJS)
 
 .c.o:
-	gcc -Wall -Wextra -Werror -c $< -o ${<:.c=.o}
+	gcc -Wall -Wextra -Werror -c -I./includes $< -o ${<:.c=.o}
 
 exe: all
 	@./$(NAME)
