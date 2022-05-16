@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/23 13:10:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/02/26 11:51:52 by faventur         ###   ########.fr       */
+/*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
+/*   Updated: 2022/05/16 10:47:24 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** The memset() function fills the first n bytes of the memory area
-** pointed to by s with the constant byte c.
-** 
-** Return Value: The memset() function returns a pointer to the
-** memory area s.
-*/
+#ifndef PHILO_H
+# define PHILO_H
 
-#include "libft.h"
+# include <pthread.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <sys/time.h>
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	unsigned char	*str;
-
-	str = (unsigned char *)s;
-	while (n--)
-		*str++ = (unsigned char)c;
-	return (s);
-}
+#endif
