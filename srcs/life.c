@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 18:53:23 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/23 19:05:23 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	the_end(t_man ph)
 	}
 }
 
-void	think(t_sophist philo, t_man rules, useconds_t reflection_time)
+void	think(t_sophist philo, t_man rules, long long reflection_time)
 {
 	take_notes(philo, rules, "is studying religion");
 	take_notes(philo, rules, "is feeling like an anarchist");
@@ -47,12 +47,13 @@ void	think(t_sophist philo, t_man rules, useconds_t reflection_time)
 
 void	take_notes(t_sophist philo, t_man rules, char *msg)
 {
+	gettimeofday(&rules.end, NULL);
 	pthread_mutex_lock(&rules.writing);
-	printf("%d %d %s\n", rules.start.tv_usec, philo.id, msg);
+	printf("%ld %d %s\n", time_diff(&rules.start, &rules.end), philo.id, msg);
 	pthread_mutex_unlock(&rules.writing);
 }
 
-void	eat(t_sophist philo, t_man rules, useconds_t eating_time)
+void	eat(t_sophist philo, t_man rules, long long eating_time)
 {
 	(void)eating_time;
 	pthread_mutex_lock(&rules.forks[philo.left_fork]);
