@@ -6,7 +6,7 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/05/23 19:15:38 by faventur         ###   ########.fr        #
+#    Updated: 2022/05/23 20:42:27 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,11 @@ CURSIVE = \033[3m
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@gcc $(FLAGS) $(OBJS) $(LINKS) -o $(NAME)
-	@echo "$(HIBLUE)Carneade! Chi era costui?$(NONE)"
-	@echo "Don Abbondio, $(CURSIVE)I promessi sposi$(NONE)"
 	@echo "$(HIGREEN)No! Try not! Do! Or do not! There is no try.$(NONE)"
 	@echo "$(CURSIVE)Master Yoda$(NONE)"
+	@gcc $(FLAGS) $(OBJS) $(LINKS) -o $(NAME)
+	@echo "$(HIBLUE)Philosopher, c'est apprendre à mourir.$(NONE)"
+	@echo "Montaigne, $(CURSIVE)Les Essais$(NONE)"
 	@rm $(OBJS)
 
 .c.o:
