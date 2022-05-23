@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 17:43:27 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:38:32 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ t_man	init_all(char *argv[])
 	int		i;
 
 	ph.tot = ft_atoi(argv[1]);
+//	ph.eating_time = ft_atoi(argv[3]);
+	ph.eating_time = 1500;
+//	ph.time_to_sleep = ft_atoi(argv[4]);
+	ph.time_to_sleep = 2000;
 	i = 0;
 	while (i < ph.tot)
 	{

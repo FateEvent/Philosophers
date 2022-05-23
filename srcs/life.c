@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 17:50:23 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/23 18:53:23 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	the_end(t_man ph)
 	i = 0;
 	while (i < ph.tot)
 	{
+		free(ph.pax[i]);
 		if (pthread_join(ph.pax[i]->pt, (void *)&ph.pax[i]) != 0)
 		{
 			perror("The thread got lost");
@@ -31,9 +32,9 @@ void	the_end(t_man ph)
 		}
 		pthread_mutex_destroy(&ph.forks[i]);
 		printf("The thread finished its execution\n");
+		free(ph.pax[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&ph.writing);
 }
 
 void	think(t_sophist philo, t_man rules, useconds_t reflection_time)
@@ -47,9 +48,7 @@ void	think(t_sophist philo, t_man rules, useconds_t reflection_time)
 void	take_notes(t_sophist philo, t_man rules, char *msg)
 {
 	pthread_mutex_lock(&rules.writing);
-	gettimeofday(&rules.end, NULL);
-	printf("%d %d %s\n", time_diff(&rules.start, &rules.end), philo.id, msg);
-
+	printf("%d %d %s\n", rules.start.tv_usec, philo.id, msg);
 	pthread_mutex_unlock(&rules.writing);
 }
 
@@ -79,7 +78,11 @@ void	*routine(void *philosophical_void)
 	while (42)
 	{
 		eat(*philo, rules, 1500);
+		gettimeofday(&rules.end, NULL);
 		think(*philo, rules, 1500);
+		gettimeofday(&rules.end, NULL);
 	}
 	return (NULL);
 }
+
+/* remember the deadlocks! */
