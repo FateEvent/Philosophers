@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 19:05:23 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/23 20:11:44 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,19 @@ void	eat(t_sophist philo, t_man rules, long long eating_time)
 void	*routine(void *philosophical_void)
 {
 	t_sophist	*philo;
-	t_man		rules;
+	t_man		*rules;
 
 	philo = (t_sophist *)philosophical_void;
-	gettimeofday(&rules.start, NULL);
+	rules = philo->rules;
+	gettimeofday(&rules->start, NULL);
 	if (philo->id % 2 == 0)
 		starting_blocks(1500);
 	while (42)
 	{
-		eat(*philo, rules, 1500);
-		gettimeofday(&rules.end, NULL);
-		think(*philo, rules, 1500);
-		gettimeofday(&rules.end, NULL);
+		eat(*philo, *rules, 1500);
+		gettimeofday(&rules->end, NULL);
+		think(*philo, *rules, 1500);
+		gettimeofday(&rules->end, NULL);
 	}
 	return (NULL);
 }
