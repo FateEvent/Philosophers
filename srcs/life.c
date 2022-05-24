@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 20:11:44 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:44:11 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ void	take_notes(t_sophist philo, t_man rules, char *msg)
 	pthread_mutex_unlock(&rules.writing);
 }
 
-void	eat(t_sophist philo, t_man rules, long long eating_time)
+void	eat(t_sophist philo, t_man rules, long long time_to_eat)
 {
-	(void)eating_time;
+	(void)time_to_eat;
 	pthread_mutex_lock(&rules.forks[philo.left_fork]);
 	take_notes(philo, rules, "has taken a fork");
 	pthread_mutex_lock(&rules.forks[philo.right_fork]);
 	take_notes(philo, rules, "has taken a fork");
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, rules, "is eating");
+	philo.last_meal = whats_the_time();
+	time_goes_by(philo, time_to_eat);
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
 	pthread_mutex_unlock(&rules.meal);

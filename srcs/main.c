@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/23 20:12:36 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 10:56:17 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_man	*init_all(char *argv[])
 
 	ph = (t_man *)malloc(sizeof(*ph));
 	ph->tot = ft_atoi(argv[1]);
-//	ph->eating_time = ft_atoi(argv[3]);
-	ph->eating_time = 1500;
+//	ph->time_to_eat = ft_atoi(argv[3]);
+	ph->time_to_eat = 1500;
 //	ph->time_to_sleep = ft_atoi(argv[4]);
 	ph->time_to_sleep = 2000;
 	i = 0;
@@ -60,7 +60,8 @@ int	main(int argc, char *argv[])
 	int		end;
 	int		death;
 
-	(void)argc;
+	if (argc < 5 || argc > 6)
+		ft_puterror("Error: the number of arguments is incorrect.");
 	death = 0;
 	end = 0;
 	ph = init_all(argv);
