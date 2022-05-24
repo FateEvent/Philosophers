@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 17:28:01 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:33:40 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	take_notes(t_sophist philo, char *msg)
 void	ft_sleep(t_sophist philo)
 {
 	take_notes(philo, "is sleeping");
-	timecount(philo.rules->time_to_sleep);
+	gettimeofday(&philo.acting, NULL);
+	timecount(philo, philo.rules->time_to_sleep);
 }
 
 void	think(t_sophist philo)
@@ -72,7 +73,8 @@ void	eat(t_sophist philo)
 	take_notes(philo, "has taken a fork");
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, "is eating");
-	timecount(rules.time_to_eat);
+	gettimeofday(&philo.acting, NULL);
+	timecount(philo, rules.time_to_eat);
 	gettimeofday(&philo.last_meal, NULL);
 	philo.many_meals++;
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
@@ -87,8 +89,11 @@ void	*routine(void *philosophical_void)
 
 	philo = (t_sophist *)philosophical_void;
 	rules = philo->rules;
-	if (philo->id == philo->rules->tot || philo->id % 2 == 0)
-		starting_blocks(rules->time_to_eat);
+	if (philo->id == philo->rules->tot - 1 || philo->id % 2 == 0)
+	{
+		gettimeofday(&philo->acting, NULL);
+		timecount(*philo, rules->time_to_eat);
+	}
 	while (42)
 	{
 	//	check_death(&philo);

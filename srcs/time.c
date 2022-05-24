@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 17:30:20 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:39:09 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	time_goes_by(struct timeval *time, long standard)
 	return (0);
 }
 
-long	length_diff(long time_lapse, long duration)
+long	length_diff(long present, long past)
 {
-	return (time_lapse - duration);
+	return (present - past);
 }
 
 long	get_the_time(void)
@@ -60,11 +60,20 @@ long	get_the_time(void)
 	return (sec * 1000 + usec / 1000);
 }
 
-void	timecount(long duration)
+void	timecount(t_sophist philo, long duration)
 {
-	long	t;
+	long	sec;
+	long	usec;
+	long	time;
 
-	t = get_the_time();
-	while (length_diff(t, get_the_time()) < duration)
+	sec = philo.acting.tv_sec;
+	printf("time %ld\n", sec);
+	usec = philo.acting.tv_usec;
+	time = sec * 1000 + usec / 1000;
+	while (length_diff(get_the_time(), time) < duration)
+	{
+//		printf("time %ld\n", get_the_time());
+//		printf("time 2 %d\n", length_diff(time, get_the_time()) < duration);
 		usleep(50);
+	}
 }

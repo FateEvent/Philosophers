@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 17:34:26 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 18:05:05 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ int	check_args(int argc)
 		return (0);
 	}
 	return (1);
-}
-
-void	starting_blocks(long long time_to_eat)
-{
-	while (time_to_eat > 0)
-	{
-		timecount(time_to_eat);
-	}
 }
 
 void	check_death(t_sophist *philo)
