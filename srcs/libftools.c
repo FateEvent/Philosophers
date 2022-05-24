@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:57:44 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 11:29:40 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:50:53 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,18 @@ static void	ft_putendl_fd(const char *str, int fd)
 	if (fd >= 0)
 	{
 		while (*str)
-			write(1, &*str, fd);
+		{
+			write(fd, &*str, 1);
+			str++;
+		}
+		write(1, "\n", fd);
 	}
-	write(1, "\n", fd);
 }
 
 void	ft_puterror(const char *str)
 {
 	ft_putendl_fd(str, 2);
 }
+/*
+write(1, argv[1][i], argv[1][i] - 'a' + 1);
+*/

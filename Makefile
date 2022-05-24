@@ -6,11 +6,11 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/05/23 20:42:27 by faventur         ###   ########.fr        #
+#    Updated: 2022/05/24 15:26:39 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c libftools.c utils.c life.c
+SRCS = main.c libftools.c utils.c life.c time.c
 
 OBJS	= $(addprefix srcs/, ${SRCS:.c=.o})
 

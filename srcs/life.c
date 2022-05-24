@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 12:55:15 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 15:34:46 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ void	think(t_sophist philo, t_man rules, long long reflection_time)
 
 void	take_notes(t_sophist philo, t_man rules, char *msg)
 {
-	gettimeofday(&rules.end, NULL);
+	struct timeval	now;
+
+	gettimeofday(&now, NULL);
 	pthread_mutex_lock(&rules.writing);
-	printf("%ld %d %s\n", time_diff(&rules.start, &rules.end), philo.id, msg);
+	printf("%ld %d %s\n", time_diff(&rules.start, &now), philo.id + 1, msg);
 	pthread_mutex_unlock(&rules.writing);
 }
 
@@ -63,9 +65,10 @@ void	eat(t_sophist philo, t_man rules, long long time_to_eat)
 	take_notes(philo, rules, "has taken a fork");
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, rules, "is eating");
+	timecount();
 	gettimeofday(&philo.last_meal, NULL);
-	printf("%lld\n", philo.last_meal);
-//	time_goes_by(philo.last_meal, time_to_eat);
+	philo.many_meals++;
+	time_goes_by(&philo.last_meal, time_to_eat);
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
 	pthread_mutex_unlock(&rules.meal);
@@ -78,15 +81,13 @@ void	*routine(void *philosophical_void)
 
 	philo = (t_sophist *)philosophical_void;
 	rules = philo->rules;
-	gettimeofday(&rules->start, NULL);
-	if (philo->id % 2 == 0)
+//	check_death(philo);
+	if (philo->id == philo->rules->tot || philo->id % 2 == 0)
 		starting_blocks(1500);
 	while (42)
 	{
 		eat(*philo, *rules, 1500);
-		gettimeofday(&rules->end, NULL);
 		think(*philo, *rules, 1500);
-		gettimeofday(&rules->end, NULL);
 	}
 	return (NULL);
 }

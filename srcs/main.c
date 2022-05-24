@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 12:35:54 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:01:09 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ void	launch(t_man *ph)
 static void	ft_update_struct(t_man *ph, char *argv[])
 {
 	ph->tot = ft_atoi(argv[1]);
-//	ph->time_to_eat = ft_atoi(argv[2]);
-//	ph->time_to_eat = ft_atoi(argv[3]);
-	ph->time_to_eat = 1500;
-//	ph->time_to_sleep = ft_atoi(argv[4]);
-	ph->time_to_sleep = 2000;
-//	if (argv[5])
-//		ph->num_of_meals = ft_atoi(argv[5]);
-//	else
-//		ph->num_of_meals = -1;
+	ph->time_to_eat = ft_atoi(argv[2]);
+	ph->time_to_eat = ft_atoi(argv[3]);
+	ph->time_to_sleep = ft_atoi(argv[4]);
+	if (argv[5])
+		ph->num_of_meals = ft_atoi(argv[5]);
+	else
+		ph->num_of_meals = -1;
 }
 
 t_man	*init_all(char *argv[])
@@ -59,6 +57,7 @@ t_man	*init_all(char *argv[])
 		ph->pax[i]->id = i;
 		ph->pax[i]->left_fork = i;
 		ph->pax[i]->right_fork = (i + 1) % ph->tot;
+		ph->pax[i]->many_meals = 0;
 		ph->pax[i]->dead = 0;
 		ph->pax[i]->rules = ph;
 		pthread_mutex_init(&ph->forks[i], NULL);
@@ -68,30 +67,7 @@ t_man	*init_all(char *argv[])
 	return (ph);
 }
 
-int	main(int argc, char *argv[])
-{
-	t_man	*ph;
-	int		end;
-	int		death;
-
-	(void)argc;
-	death = 0;
-	end = 0;
-	ph = init_all(argv);
-	launch(ph);
-	while (end <= ph->tot)
-	{
-		if (ph->pax[end]->dead == 1)
-			the_end(ph);
-		end++;
-		if (end == ph->tot)
-			end = 0;
-	}
-	return (0);
-}
-
-/*
-int	check_args(int argc, char *argv[])
+int	check_args(int argc)
 {
 	if (argc < 5 || argc > 6)
 	{
@@ -100,19 +76,19 @@ int	check_args(int argc, char *argv[])
 	}
 	return (1);
 }
-*/
-/*
+
 int	main(int argc, char *argv[])
 {
 	t_man	*ph;
 	int		end;
 	int		death;
-(void)argc;
-//	if (check_args(argc))
-//	{
+
+	if (check_args(argc))
+	{
 		death = 0;
 		end = 0;
 		ph = init_all(argv);
+		gettimeofday(&ph->start, NULL);
 		launch(ph);
 		while (end <= ph->tot)
 		{
@@ -123,6 +99,5 @@ int	main(int argc, char *argv[])
 				end = 0;
 		}
 		return (0);
-//	}
+	}
 }
-*/
