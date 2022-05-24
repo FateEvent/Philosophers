@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 15:33:42 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:12:07 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,23 @@ void	ft_puterror(const char *str);
 int		ft_atoi(const char *nptr);
 
 void	*routine(void *philosophical_void);
-void	eat(t_sophist philo, t_man rules, long long time_to_eat);
-void	think(t_sophist philo, t_man rules, long long reflection_time);
-void	take_notes(t_sophist philo, t_man rules, char *msg);
-void	the_end(t_man *ph);
+void	eat(t_sophist philo);
+void	think(t_sophist philo);
+void	take_notes(t_sophist philo, char *msg);
+void	the_end(t_man *rules);
 
 t_man	*init_all(char *argv[]);
 void	launch(t_man *ph);
 
+void	timecount(long duration);
 long	time_diff(struct timeval *start, struct timeval *end);
-int		time_goes_by(struct timeval *time, long standard);
 long	length_diff(long time_lapse, long duration);
 long	get_the_time(void);
-void	timecount(void);
+int		time_goes_by(struct timeval *time, long standard);
 
 void	starting_blocks(long long time_to_eat);
 void	check_death(t_sophist *philo);
+void	check_program_end(t_sophist	*ph);
+int		check_args(int argc);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 16:01:09 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 16:48:12 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,25 +67,13 @@ t_man	*init_all(char *argv[])
 	return (ph);
 }
 
-int	check_args(int argc)
-{
-	if (argc < 5 || argc > 6)
-	{
-		ft_puterror("Error: the number of arguments is incorrect.");
-		return (0);
-	}
-	return (1);
-}
-
 int	main(int argc, char *argv[])
 {
 	t_man	*ph;
 	int		end;
-	int		death;
 
 	if (check_args(argc))
 	{
-		death = 0;
 		end = 0;
 		ph = init_all(argv);
 		gettimeofday(&ph->start, NULL);

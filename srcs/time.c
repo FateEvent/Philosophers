@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 15:33:00 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 17:30:20 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,17 @@ long	get_the_time(void)
 	long			sec;
 	long			usec;
 
+	gettimeofday(&now, NULL);
 	sec = now.tv_sec;
 	usec = now.tv_usec;
 	return (sec * 1000 + usec / 1000);
 }
 
-void	timecount(void)
+void	timecount(long duration)
 {
 	long	t;
 
 	t = get_the_time();
-	while (length_diff(t, get_the_time()))
+	while (length_diff(t, get_the_time()) < duration)
 		usleep(50);
 }
