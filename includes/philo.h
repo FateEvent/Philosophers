@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 10:48:41 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:52:34 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_sophist
 	int				right_fork;
 	int				left_fork;
 	int				dead;
-	long long		last_meal;
+	struct timeval	last_meal;
 	pthread_t		pt;
 	struct s_man	*rules;
 }				t_sophist;
@@ -42,7 +42,7 @@ typedef struct s_man
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
-	long long			time_of_meals;
+	long				num_of_meals;
 }				t_man;
 
 void	*ft_memset(void *s, int c, size_t n);
@@ -53,14 +53,13 @@ void	*routine(void *philosophical_void);
 void	eat(t_sophist philo, t_man rules, long long time_to_eat);
 void	think(t_sophist philo, t_man rules, long long reflection_time);
 void	take_notes(t_sophist philo, t_man rules, char *msg);
-void	the_end(t_man ph);
+void	the_end(t_man *ph);
 
 t_man	*init_all(char *argv[]);
 void	launch(t_man *ph);
 
 void	starting_blocks(long long time_to_eat);
 long	time_diff(struct timeval *start, struct timeval *end);
-long	whats_the_time(void);
-int		time_goes_by(t_sophist philo, long standard);
+int		time_goes_by(struct timeval *time, long standard);
 
 #endif

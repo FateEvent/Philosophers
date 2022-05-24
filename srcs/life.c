@@ -6,35 +6,36 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 10:44:11 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/24 12:48:12 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	the_end(t_man ph)
+void	the_end(t_man *ph)
 {
 	int	i;
 
 	i = 0;
-	while (i < ph.tot)
+	while (i < ph->tot)
 	{
-		free(ph.pax[i]);
-		if (pthread_join(ph.pax[i]->pt, (void *)&ph.pax[i]) != 0)
+		free(ph->pax[i]);
+		if (pthread_join(ph->pax[i]->pt, (void *)&ph->pax[i]) != 0)
 		{
 			perror("The thread got lost");
 			return ;
 		}
-		if (pthread_detach(ph.pax[i]->pt) != 0)
+		if (pthread_detach(ph->pax[i]->pt) != 0)
 		{
 			perror("Boh\n");
 			return ;
 		}
-		pthread_mutex_destroy(&ph.forks[i]);
+		pthread_mutex_destroy(&ph->forks[i]);
 		printf("The thread finished its execution\n");
-		free(ph.pax[i]);
+		free(ph->pax[i]);
 		i++;
 	}
+	free(ph);
 }
 
 void	think(t_sophist philo, t_man rules, long long reflection_time)
@@ -62,7 +63,8 @@ void	eat(t_sophist philo, t_man rules, long long time_to_eat)
 	take_notes(philo, rules, "has taken a fork");
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, rules, "is eating");
-	philo.last_meal = whats_the_time();
+	gettimeofday(&philo.last_meal, NULL);
+	printf("%lld\n", philo.last_meal);
 	time_goes_by(philo, time_to_eat);
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
