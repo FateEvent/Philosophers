@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 19:04:50 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:21:07 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	the_end(t_man *rules)
 	i = 0;
 	while (i < rules->tot)
 	{
-		free(rules->pax[i]);
+//		free(rules->pax[i]);
 		if (pthread_join(rules->pax[i]->pt, (void *)&rules->pax[i]) != 0)
 		{
 			perror("The thread got lost");
@@ -32,7 +32,7 @@ void	the_end(t_man *rules)
 		}
 		pthread_mutex_destroy(&rules->forks[i]);
 		printf("The thread finished its execution\n");
-		free(rules->pax[i]);
+//		free(rules->pax[i]);
 		i++;
 	}
 	free(rules);

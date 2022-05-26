@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 19:39:31 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:35:43 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ void	*routine(void *philosophical_void)
 	}
 	while (42)
 	{
-		check_death(philo);
 		eat(*philo);
 		gettimeofday(&philo->last_meal, NULL);
 		philo->meals_num++;
 		check_meals(rules);
-		check_death(philo);
+		check_program_end(philo);
 		think(*philo);
-		check_death(philo);
+		death_note(philo);
 		ft_sleep(*philo);
 	}
 	return (NULL);
@@ -59,6 +58,7 @@ void	launch(t_man *ph)
 static void	ft_update_struct(t_man *ph, char *argv[])
 {
 	ph->tot = ft_atoi(argv[1]);
+	ph->deaths = 0;
 	ph->time_to_die = ft_atoi(argv[2]);
 	ph->time_to_eat = ft_atoi(argv[3]);
 	ph->time_to_sleep = ft_atoi(argv[4]);
@@ -106,14 +106,8 @@ int	main(int argc, char *argv[])
 		end = 0;
 		ph = init_all(argv);
 		launch(ph);
-		while (end <= ph->tot)
-		{
-			if (ph->pax[end]->dead == 1)
-				the_end(ph);
-			end++;
-			if (end == ph->tot)
-				end = 0;
-		}
+		while (!ph->deaths)
+			;
 		return (0);
 	}
 }

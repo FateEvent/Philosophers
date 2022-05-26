@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 19:38:46 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:44:05 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,16 @@ int	check_meals(t_man *rules)
 		i++;
 	}
 	if (rules->num_of_meals != -1)
+	{
 		rules->num_of_meals--;
+		if (rules->num_of_meals == 0)
+			the_end(rules);
+		printf("%ld\n", rules->num_of_meals);
+	}
 	return (1);
 }
 
-int	check_death(t_sophist *philo)
+int	death_note(t_sophist *philo)
 {
 	struct timeval	now;
 
@@ -50,10 +55,9 @@ int	check_death(t_sophist *philo)
 		if (time_diff(&philo->last_meal, &now) > philo->rules->time_to_die)
 		{
 			philo->dead = 1;
+			philo->rules->deaths = 1;
 			take_notes(*philo, "has died\n");
-			printf("from last meal m_num %ld code num %d\n", philo->meals_num, philo->id + 1);
-			printf("from last meal %ld\n", now.tv_sec * 1000 + now.tv_usec / 1000 - philo->last_meal.tv_sec * 1000 + philo->last_meal.tv_usec / 1000);
-			exit(1);
+			the_end(philo->rules);
 		}
 	}
 	else if (philo->meals_num == 0)
@@ -61,10 +65,9 @@ int	check_death(t_sophist *philo)
 		if (time_diff(&philo->rules->start, &now) > philo->rules->time_to_die)
 		{
 			philo->dead = 1;
+			philo->rules->deaths = 1;
 			take_notes(*philo, "has died\n");
-			printf("from start m_num %ld code num %d\n", philo->meals_num, philo->id + 1);
-			printf("from start %ld\n", now.tv_sec * 1000 + now.tv_usec / 1000 - philo->rules->start.tv_sec * 1000 + philo->rules->start.tv_usec / 1000);
-			exit(1);
+			the_end(philo->rules);
 		}
 	}
 	return (0);
@@ -72,17 +75,8 @@ int	check_death(t_sophist *philo)
 
 void	check_program_end(t_sophist	*ph)
 {
-	int	i;
-
-	i = 0;
 	if (ph->rules->num_of_meals == 0)
 		the_end(ph->rules);
-	while (i < ph->rules->tot)
-	{
-		if (ph->rules->pax[i]->dead == 1)
-			the_end(ph->rules);
-		i++;
-		if (i == ph->rules->tot)
-			i = 0;
-	}
+	if (ph->rules->deaths > 0)
+		the_end(ph->rules);
 }
