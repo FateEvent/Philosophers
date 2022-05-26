@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 20:33:12 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:23:52 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ long	length_diff(long present, long past);
 long	get_the_time(void);
 int		time_goes_by(struct timeval *time, long standard);
 
-void	check_program_end(t_sophist	*ph);
+int		check_program_end(t_sophist	*ph);
 int		check_meals(t_man *rules);
 int		death_note(t_sophist *philo);
 int		check_args(int argc);

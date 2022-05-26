@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 20:44:05 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:19:05 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ int	check_meals(t_man *rules)
 		i++;
 	}
 	if (rules->num_of_meals != -1)
-	{
 		rules->num_of_meals--;
-		if (rules->num_of_meals == 0)
-			the_end(rules);
-		printf("%ld\n", rules->num_of_meals);
-	}
 	return (1);
 }
 
@@ -57,7 +52,7 @@ int	death_note(t_sophist *philo)
 			philo->dead = 1;
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died\n");
-			the_end(philo->rules);
+			return (1);
 		}
 	}
 	else if (philo->meals_num == 0)
@@ -67,16 +62,17 @@ int	death_note(t_sophist *philo)
 			philo->dead = 1;
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died\n");
-			the_end(philo->rules);
+			return (1);
 		}
 	}
 	return (0);
 }
 
-void	check_program_end(t_sophist	*ph)
+int	check_program_end(t_sophist	*ph)
 {
 	if (ph->rules->num_of_meals == 0)
-		the_end(ph->rules);
+		return (1);
 	if (ph->rules->deaths > 0)
-		the_end(ph->rules);
+		return (1);
+	return (0);
 }

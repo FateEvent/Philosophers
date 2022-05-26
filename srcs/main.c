@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 20:35:43 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 21:36:55 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,17 @@ void	*routine(void *philosophical_void)
 		gettimeofday(&philo->acting, NULL);
 		timecount(*philo, rules->time_to_eat);
 	}
-	while (42)
+	while (!death_note(philo))
 	{
 		eat(*philo);
 		gettimeofday(&philo->last_meal, NULL);
 		philo->meals_num++;
-		check_meals(rules);
-		check_program_end(philo);
+//		check_meals(rules);
+		if (check_program_end(philo))
+			break ;
 		think(*philo);
-		death_note(philo);
+		if (check_program_end(philo))
+			break ;
 		ft_sleep(*philo);
 	}
 	return (NULL);
@@ -106,8 +108,9 @@ int	main(int argc, char *argv[])
 		end = 0;
 		ph = init_all(argv);
 		launch(ph);
-		while (!ph->deaths)
+		while (!ph->deaths || !ph->num_of_meals)
 			;
+		the_end(ph);
 		return (0);
 	}
 }
