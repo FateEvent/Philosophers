@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 17:05:08 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:04:50 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	take_notes(t_sophist philo, char *msg)
 	struct timeval	now;
 
 	rules = *philo.rules;
-	gettimeofday(&now, NULL);
 	pthread_mutex_lock(&rules.writing);
+	gettimeofday(&now, NULL);
 	printf("%ld %d %s\n", time_diff(&rules.start, &now), philo.id + 1, msg);
 	pthread_mutex_unlock(&rules.writing);
 }
@@ -74,11 +74,8 @@ void	eat(t_sophist philo)
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, "is eating");
 	gettimeofday(&philo.acting, NULL);
-	timecount(philo, rules.time_to_eat);
-	gettimeofday(&philo.last_meal, NULL);
-//	printf("last meal de %d %ld\n", philo.id, philo.last_meal.tv_sec * 1000 + philo.last_meal.tv_usec / 1000);
-	philo.meals_num++;
-	printf("philo %d happy meal %ld\n", philo.id, philo.meals_num);
+	countdown(philo, rules.time_to_eat);
+	printf("philo %d happy meal %ld\n", philo.id + 1, philo.meals_num);
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
 	pthread_mutex_unlock(&rules.meal);

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 16:53:19 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 19:39:31 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ void	*routine(void *philosophical_void)
 	{
 		check_death(philo);
 		eat(*philo);
+		gettimeofday(&philo->last_meal, NULL);
+		philo->meals_num++;
+		check_meals(rules);
+		check_death(philo);
 		think(*philo);
+		check_death(philo);
 		ft_sleep(*philo);
 	}
 	return (NULL);
