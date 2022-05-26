@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 22:41:10 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:47:35 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	check_args(int argc)
 {
 	if (argc < 5 || argc > 6)
 	{
-		ft_puterror("Error: the number of arguments is incorrect.");
+		ft_puterror("Error: The number of arguments is incorrect.");
 		return (0);
 	}
 	return (1);
