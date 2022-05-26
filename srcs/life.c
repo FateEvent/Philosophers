@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 18:33:40 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:31:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,32 +76,10 @@ void	eat(t_sophist philo)
 	gettimeofday(&philo.acting, NULL);
 	timecount(philo, rules.time_to_eat);
 	gettimeofday(&philo.last_meal, NULL);
-	philo.many_meals++;
+	printf("last meal de %d %ld\n", philo.id, philo.last_meal.tv_sec * 1000 + philo.last_meal.tv_usec / 1000);
+	philo.meals_num++;
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
 	pthread_mutex_unlock(&rules.meal);
 }
-
-void	*routine(void *philosophical_void)
-{
-	t_sophist	*philo;
-	t_man		*rules;
-
-	philo = (t_sophist *)philosophical_void;
-	rules = philo->rules;
-	if (philo->id == philo->rules->tot - 1 || philo->id % 2 == 0)
-	{
-		gettimeofday(&philo->acting, NULL);
-		timecount(*philo, rules->time_to_eat);
-	}
-	while (42)
-	{
-	//	check_death(&philo);
-		eat(*philo);
-		think(*philo);
-		ft_sleep(*philo);
-	}
-	return (NULL);
-}
-
 /* remember the deadlocks! */

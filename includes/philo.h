@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 18:27:11 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 15:37:48 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_sophist
 	int				right_fork;
 	int				left_fork;
 	int				dead;
-	long			many_meals;
+	long			meals_num;
 	struct timeval	acting;
 	struct timeval	last_meal;
 	pthread_t		pt;
@@ -53,6 +53,7 @@ int		ft_atoi(const char *nptr);
 void	*routine(void *philosophical_void);
 void	eat(t_sophist philo);
 void	think(t_sophist philo);
+void	ft_sleep(t_sophist philo);
 void	take_notes(t_sophist philo, char *msg);
 void	the_end(t_man *rules);
 

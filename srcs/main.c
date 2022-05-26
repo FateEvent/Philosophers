@@ -6,11 +6,34 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/24 16:48:12 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:05:17 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*routine(void *philosophical_void)
+{
+	t_sophist	*philo;
+	t_man		*rules;
+
+	philo = (t_sophist *)philosophical_void;
+	rules = philo->rules;
+	if ((rules->tot % 2 == 1 && philo->id == philo->rules->tot - 1)
+		|| philo->id % 2 == 0)
+	{
+		gettimeofday(&philo->acting, NULL);
+		timecount(*philo, rules->time_to_eat);
+	}
+	while (42)
+	{
+		check_death(philo);
+		eat(*philo);
+		think(*philo);
+		ft_sleep(*philo);
+	}
+	return (NULL);
+}
 
 void	launch(t_man *ph)
 {
@@ -30,7 +53,7 @@ void	launch(t_man *ph)
 static void	ft_update_struct(t_man *ph, char *argv[])
 {
 	ph->tot = ft_atoi(argv[1]);
-	ph->time_to_eat = ft_atoi(argv[2]);
+	ph->time_to_die = ft_atoi(argv[2]);
 	ph->time_to_eat = ft_atoi(argv[3]);
 	ph->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
@@ -57,7 +80,7 @@ t_man	*init_all(char *argv[])
 		ph->pax[i]->id = i;
 		ph->pax[i]->left_fork = i;
 		ph->pax[i]->right_fork = (i + 1) % ph->tot;
-		ph->pax[i]->many_meals = 0;
+		ph->pax[i]->meals_num = 0;
 		ph->pax[i]->dead = 0;
 		ph->pax[i]->rules = ph;
 		pthread_mutex_init(&ph->forks[i], NULL);
