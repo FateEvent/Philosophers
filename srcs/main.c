@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 21:36:55 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:39:37 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,20 @@ void	*routine(void *philosophical_void)
 
 	philo = (t_sophist *)philosophical_void;
 	rules = philo->rules;
+	if (rules->tot == 1)
+		ft_sleep(*philo);
 	if ((rules->tot % 2 == 1 && philo->id == philo->rules->tot - 1)
 		|| philo->id % 2 == 0)
 	{
 		gettimeofday(&philo->acting, NULL);
 		timecount(*philo, rules->time_to_eat);
 	}
-	while (!death_note(philo))
+	while (!check_program_end(philo))
 	{
 		eat(*philo);
 		gettimeofday(&philo->last_meal, NULL);
 		philo->meals_num++;
-//		check_meals(rules);
-		if (check_program_end(philo))
-			break ;
 		think(*philo);
-		if (check_program_end(philo))
-			break ;
 		ft_sleep(*philo);
 	}
 	return (NULL);
@@ -61,11 +58,15 @@ static void	ft_update_struct(t_man *ph, char *argv[])
 {
 	ph->tot = ft_atoi(argv[1]);
 	ph->deaths = 0;
+	ph->happy_meals = 0;
 	ph->time_to_die = ft_atoi(argv[2]);
 	ph->time_to_eat = ft_atoi(argv[3]);
 	ph->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
+	{
 		ph->num_of_meals = ft_atoi(argv[5]);
+		printf("%ld\n", ph->num_of_meals);
+	}
 	else
 		ph->num_of_meals = -1;
 }
@@ -101,15 +102,14 @@ t_man	*init_all(char *argv[])
 int	main(int argc, char *argv[])
 {
 	t_man	*ph;
-	int		end;
 
 	if (check_args(argc))
 	{
-		end = 0;
 		ph = init_all(argv);
 		launch(ph);
 		while (!ph->deaths || !ph->num_of_meals)
-			;
+			if (check_meals(ph))
+				break ;
 		the_end(ph);
 		return (0);
 	}

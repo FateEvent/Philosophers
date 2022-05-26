@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 21:19:05 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:41:10 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,15 @@ int	check_meals(t_man *rules)
 	int	i;
 	int	cmp;
 
-	i = 1;
-	cmp = rules->pax[0]->meals_num;
+	i = 0;
+	cmp = rules->num_of_meals;
 	while (i < rules->tot)
 	{
-		if (rules->pax[i]->meals_num != cmp)
+		if (rules->pax[i]->meals_num < cmp)
 			return (0);
 		i++;
 	}
-	if (rules->num_of_meals != -1)
-		rules->num_of_meals--;
+	rules->happy_meals = rules->num_of_meals;
 	return (1);
 }
 
@@ -70,7 +69,7 @@ int	death_note(t_sophist *philo)
 
 int	check_program_end(t_sophist	*ph)
 {
-	if (ph->rules->num_of_meals == 0)
+	if (ph->rules->num_of_meals == ph->rules->happy_meals)
 		return (1);
 	if (ph->rules->deaths > 0)
 		return (1);
