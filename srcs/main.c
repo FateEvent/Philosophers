@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 16:05:17 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 16:53:19 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	launch(t_man *ph)
 	int	i;
 
 	i = 0;
+	gettimeofday(&ph->start, NULL);
 	while (i < ph->tot)
 	{
 		if (pthread_create(&ph->pax[i]->pt, NULL, &routine, ph->pax[i]) != 0)
@@ -99,7 +100,6 @@ int	main(int argc, char *argv[])
 	{
 		end = 0;
 		ph = init_all(argv);
-		gettimeofday(&ph->start, NULL);
 		launch(ph);
 		while (end <= ph->tot)
 		{
