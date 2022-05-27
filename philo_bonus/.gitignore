@@ -54,3 +54,4 @@ dkms.conf
 .DS_Store
 *.swp
 .vscode
+philo_bonus
