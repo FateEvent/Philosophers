@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 22:48:18 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:31:23 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	the_end(t_man *rules)
 		free(rules->pax[i]);
 		i++;
 	}
+	pthread_mutex_destroy(&rules->check);
 	free(rules);
 }
 

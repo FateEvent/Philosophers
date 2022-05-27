@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/27 21:17:17 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:40:38 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,13 @@ int	main(int argc, char *argv[])
 	if (check_args(argc, argv))
 	{
 		rules = init_all(argv);
-		if (rules)
-		{
-			launch(rules);
-			while (!rules->deaths)
-				if (check_deaths(rules) || check_meals(rules))
-					break ;
-			the_end(rules);
-			return (0);
-		}
+		if (!rules)
+			return (1);
+		launch(rules);
+		while (!rules->deaths)
+			if (check_deaths(rules) || check_meals(rules))
+				break ;
+		the_end(rules);
+		return (0);
 	}
-	return (1);
 }
