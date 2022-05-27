@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/27 11:36:33 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/27 21:13:16 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ typedef struct s_man
 {
 	int					tot;
 	int					deaths;
-	struct s_sophist	*pax[200];
+	struct s_sophist	*pax[1];
 	pthread_mutex_t		forks[200];
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
 	pthread_mutex_t		check;
-	pthread_mutex_t		dead;
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	long				num_of_meals;
-	long				happy_meals;
 }				t_man;
 
 void	*ft_memset(void *s, int c, size_t n);
@@ -75,6 +73,6 @@ int		check_program_end(t_sophist	*ph);
 int		check_meals(t_man *rules);
 int		check_deaths(t_man *rules);
 int		death_note(t_sophist *philo);
-int		check_args(int argc);
+int		check_args(int argc, char *argv[]);
 
 #endif
