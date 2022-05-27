@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 22:47:39 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/26 22:48:18 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ void	think(t_sophist philo)
 {
 	take_notes(philo, "is thinking");
 }
-
-
 
 void	eat(t_sophist philo)
 {

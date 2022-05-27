@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 22:11:27 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/27 11:36:33 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct s_man
 	pthread_mutex_t		forks[200];
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
+	pthread_mutex_t		check;
+	pthread_mutex_t		dead;
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
@@ -71,6 +73,7 @@ int		time_goes_by(struct timeval *time, long standard);
 
 int		check_program_end(t_sophist	*ph);
 int		check_meals(t_man *rules);
+int		check_deaths(t_man *rules);
 int		death_note(t_sophist *philo);
 int		check_args(int argc);
 
