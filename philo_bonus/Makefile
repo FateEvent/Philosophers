@@ -6,13 +6,13 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/05/26 21:28:08 by faventur         ###   ########.fr        #
+#    Updated: 2022/05/27 12:03:34 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = main.c libftools.c utils.c life.c time.c
 
-OBJS	= $(addprefix srcs/, ${SRCS:.c=.o})
+OBJS	= $(SRCS:.c=.o)
 
 FLAGS = -Wall -Wextra -Werror -g3
 DANGER = -fsanitize=address
@@ -39,7 +39,7 @@ $(NAME): $(OBJS)
 	@rm $(OBJS)
 
 .c.o:
-	gcc $(FLAGS) -c -I./includes $< -o ${<:.c=.o}
+	gcc $(FLAGS) -c $< -o ${<:.c=.o}
 
 exe: all
 	@./$(NAME)
