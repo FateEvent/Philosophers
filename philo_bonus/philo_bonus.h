@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.h                                            :+:      :+:    :+:   */
+/*   philo_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/27 11:36:33 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:05:08 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILO_H
-# define PHILO_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 
 # include <pthread.h>
 # include <unistd.h>
@@ -41,13 +41,11 @@ typedef struct s_man
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
 	pthread_mutex_t		check;
-	pthread_mutex_t		dead;
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
 	long				num_of_meals;
-	long				happy_meals;
 }				t_man;
 
 void	*ft_memset(void *s, int c, size_t n);
@@ -55,10 +53,12 @@ void	ft_puterror(const char *str);
 int		ft_atoi(const char *nptr);
 
 void	*routine(void *philosophical_void);
+void	happy_hour(t_sophist *philo, t_man *rules);
 void	eat(t_sophist philo);
 void	think(t_sophist philo);
 void	ft_sleep(t_sophist philo);
 void	take_notes(t_sophist philo, char *msg);
+void	solitude(t_sophist *philo);
 void	the_end(t_man *rules);
 
 t_man	*init_all(char *argv[]);
@@ -75,6 +75,6 @@ int		check_program_end(t_sophist	*ph);
 int		check_meals(t_man *rules);
 int		check_deaths(t_man *rules);
 int		death_note(t_sophist *philo);
-int		check_args(int argc);
+int		check_args(int argc, char *argv[]);
 
 #endif

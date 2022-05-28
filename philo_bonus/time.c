@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 20:32:57 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/28 10:44:11 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** while the countdown() function doesn't.
 */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 long	time_diff(struct timeval *start, struct timeval *end)
 {

@@ -6,11 +6,11 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/05/27 12:03:34 by faventur         ###   ########.fr        #
+#    Updated: 2022/05/28 10:41:17 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c libftools.c utils.c life.c time.c
+SRCS = main.c libftools.c utils.c life.c death.c time.c happy_hour.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -21,7 +21,7 @@ LINKS = -lpthread
 
 RM =	rm -f
 
-NAME = philo
+NAME = philo_bonus
 
 NONE = \033[0m
 HIGREEN = \033[92m

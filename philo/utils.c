@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/27 21:44:50 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/28 10:42:36 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,6 @@ int	check_meals(t_man *rules)
 	}
 	rules->deaths = 1;
 	return (1);
-}
-
-int	death_note(t_sophist *philo)
-{
-	struct timeval	now;
-
-	pthread_mutex_lock(&philo->rules->check);
-	gettimeofday(&now, NULL);
-	if (philo->meals_num > 0)
-	{
-		if (time_diff(&philo->last_meal, &now) > philo->rules->time_to_die)
-		{
-			philo->dead = 1;
-			philo->rules->deaths = 1;
-			take_notes(*philo, "has died");
-			pthread_mutex_unlock(&philo->rules->check);
-			return (1);
-		}
-	}
-	else if (philo->meals_num == 0)
-	{
-		if (time_diff(&philo->rules->start, &now) > philo->rules->time_to_die)
-		{
-			philo->dead = 1;
-			philo->rules->deaths = 1;
-			take_notes(*philo, "has died");
-			pthread_mutex_unlock(&philo->rules->check);
-			return (1);
-		}
-	}
-	pthread_mutex_unlock(&philo->rules->check);
-	return (0);
 }
 
 int	check_program_end(t_sophist	*ph)

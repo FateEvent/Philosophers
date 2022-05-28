@@ -6,30 +6,11 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 22:48:18 by faventur         ###   ########.fr       */
+/*   Updated: 2022/05/28 11:05:58 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
-
-void	the_end(t_man *rules)
-{
-	int	i;
-
-	i = 0;
-	while (i < rules->tot)
-	{
-		if (pthread_join(rules->pax[i]->pt, (void *)&rules->pax[i]) != 0)
-		{
-			ft_puterror("Error: The thread got lost.");
-			return ;
-		}
-		pthread_mutex_destroy(&rules->forks[i]);
-		free(rules->pax[i]);
-		i++;
-	}
-	free(rules);
-}
+#include "philo_bonus.h"
 
 void	take_notes(t_sophist philo, char *msg)
 {
@@ -71,4 +52,29 @@ void	eat(t_sophist philo)
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
 	pthread_mutex_unlock(&rules.meal);
+}
+
+void	*routine(void *philosophical_void)
+{
+	t_sophist	*philo;
+	t_man		*rules;
+
+	philo = (t_sophist *)philosophical_void;
+	rules = philo->rules;
+	happy_hour(philo, rules);
+	while (!check_program_end(philo))
+	{
+		eat(*philo);
+		if (rules->deaths)
+			break ;
+		gettimeofday(&philo->last_meal, NULL);
+		philo->meals_num++;
+		think(*philo);
+		if (rules->deaths)
+			break ;
+		ft_sleep(*philo);
+		if (rules->deaths)
+			break ;
+	}
+	return (NULL);
 }
