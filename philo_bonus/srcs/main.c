@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 15:58:11 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:43:23 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	launch(pid_t pid, t_man *ph)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	ph->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, ph->tot / 2);
@@ -32,12 +32,10 @@ void	launch(pid_t pid, t_man *ph)
 			break ;
 		i++;
 	}
-
 	if (pid == 0)
-	{
 		routine(ph->pax[i]);
-	}
-
+	else
+		happy_hour(ph->pax[i], ph->pax[i]->rules);
 }
 
 static void	ft_update_struct(t_man *ph, char *argv[])

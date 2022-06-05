@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/27 21:40:38 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 16:43:43 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	launch(t_man *ph)
 			ft_puterror("Error: Failed to create the thread.");
 		i++;
 	}
-	i = 0;
 }
 
 static void	ft_update_struct(t_man *ph, char *argv[])
