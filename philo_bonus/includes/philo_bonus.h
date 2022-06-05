@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/28 11:05:08 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 15:56:12 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,11 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <semaphore.h>
 
 typedef struct s_sophist
 {
 	int				id;
-	int				right_fork;
-	int				left_fork;
 	int				dead;
 	long			meals_num;
 	struct timeval	acting;
@@ -37,10 +36,7 @@ typedef struct s_man
 	int					tot;
 	int					deaths;
 	struct s_sophist	*pax[200];
-	pthread_mutex_t		forks[200];
-	pthread_mutex_t		meal;
-	pthread_mutex_t		writing;
-	pthread_mutex_t		check;
+	sem_t				*forks;
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
@@ -52,7 +48,7 @@ void	*ft_memset(void *s, int c, size_t n);
 void	ft_puterror(const char *str);
 int		ft_atoi(const char *nptr);
 
-void	*routine(void *philosophical_void);
+void	*routine(t_sophist *philo);
 void	happy_hour(t_sophist *philo, t_man *rules);
 void	eat(t_sophist philo);
 void	think(t_sophist philo);
@@ -62,7 +58,7 @@ void	solitude(t_sophist *philo);
 void	the_end(t_man *rules);
 
 t_man	*init_all(char *argv[]);
-void	launch(t_man *ph);
+void	launch(pid_t pid, t_man *ph);
 
 void	timecount(t_sophist philo, long duration);
 void	countdown(t_sophist philo, long duration);

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/28 10:44:15 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 15:36:20 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,9 @@ int	check_meals(t_man *rules)
 
 int	check_program_end(t_sophist	*ph)
 {
-	pthread_mutex_lock(&ph->rules->check);
 	if (ph->rules->deaths > 0)
 	{
-		pthread_mutex_unlock(&ph->rules->check);
 		return (1);
 	}
-	pthread_mutex_unlock(&ph->rules->check);
 	return (0);
 }

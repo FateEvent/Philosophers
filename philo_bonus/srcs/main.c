@@ -6,25 +6,38 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/28 10:44:06 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 15:58:11 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	launch(t_man *ph)
+void	launch(pid_t pid, t_man *ph)
 {
-	int	i;
+	int		i;
 
 	i = 0;
+	ph->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, ph->tot / 2);
 	gettimeofday(&ph->start, NULL);
 	while (i < ph->tot)
 	{
-		if (pthread_create(&ph->pax[i]->pt, NULL, &routine, ph->pax[i]) != 0)
-			ft_puterror("Error: Failed to create the thread.");
+		pid = fork();
+		if (pid < 0)
+		{
+			ft_puterror("Error: Failed to create the fork.");
+			sem_unlink("fourchette");
+			sem_close(ph->forks);
+		}
+		else if (pid == 0)
+			break ;
 		i++;
 	}
-	i = 0;
+
+	if (pid == 0)
+	{
+		routine(ph->pax[i]);
+	}
+
 }
 
 static void	ft_update_struct(t_man *ph, char *argv[])
@@ -56,29 +69,26 @@ t_man	*init_all(char *argv[])
 		if (!ph->pax[i])
 			return (NULL);
 		ph->pax[i]->id = i;
-		ph->pax[i]->left_fork = i;
-		ph->pax[i]->right_fork = (i + 1) % ph->tot;
 		ph->pax[i]->meals_num = 0;
 		ph->pax[i]->dead = 0;
 		ph->pax[i]->rules = ph;
-		pthread_mutex_init(&ph->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&ph->writing, NULL);
-	pthread_mutex_init(&ph->check, NULL);
 	return (ph);
 }
 
 int	main(int argc, char *argv[])
 {
-	t_man		*rules;
+	t_man	*rules;
+	pid_t	pid;
 
 	if (check_args(argc, argv))
 	{
 		rules = init_all(argv);
 		if (!rules)
 			return (1);
-		launch(rules);
+		pid = 0;
+		launch(pid, rules);
 		while (!rules->deaths)
 			if (check_deaths(rules) || check_meals(rules))
 				break ;

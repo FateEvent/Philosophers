@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/28 10:43:48 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 15:35:22 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ void	the_end(t_man *rules)
 			ft_puterror("Error: The thread got lost.");
 			return ;
 		}
-		pthread_mutex_destroy(&rules->forks[i]);
 		free(rules->pax[i]);
 		i++;
 	}
-	pthread_mutex_destroy(&rules->check);
 	free(rules);
 }
 
@@ -41,7 +39,6 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 			philo->dead = 1;
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died");
-			pthread_mutex_unlock(&philo->rules->check);
 			return (1);
 		}
 	}
@@ -54,7 +51,6 @@ int	death_note(t_sophist *philo)
 	int				ret;
 
 	ret = 0;
-	pthread_mutex_lock(&philo->rules->check);
 	gettimeofday(&now, NULL);
 	if (philo->meals_num > 0)
 	{
@@ -63,12 +59,10 @@ int	death_note(t_sophist *philo)
 			philo->dead = 1;
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died");
-			pthread_mutex_unlock(&philo->rules->check);
 			return (1);
 		}
 	}
 	else if (philo->meals_num == 0)
 		ret = death_note_pt2(now, philo);
-	pthread_mutex_unlock(&philo->rules->check);
 	return (ret);
 }
