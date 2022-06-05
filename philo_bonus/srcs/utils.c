@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 17:07:44 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:31:55 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	check_args(int argc, char *argv[])
 	if (argc < 5 || argc > 6)
 	{
 		ft_puterror("Error: The number of arguments is incorrect.");
+		return (0);
+	}
+	if (ft_atoi(argv[1]) <= 0)
+	{
+		ft_puterror("Error: There are no philosophers.");
 		return (0);
 	}
 	if (ft_atoi(argv[1]) > 200)

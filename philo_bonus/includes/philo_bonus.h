@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 18:30:10 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:05:42 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ void	think(t_sophist philo);
 void	ft_sleep(t_sophist philo);
 void	take_notes(t_sophist philo, char *msg);
 void	solitude(t_sophist *philo);
-void	the_end(pid_t pid);
+void	the_end(t_man *rules);
 
 t_man	*init_all(char *argv[]);
-void	launch(pid_t pid, t_man *ph);
+void	launch(t_man *ph);
 
 void	timecount(t_sophist philo, long duration);
 void	countdown(t_sophist philo, long duration);

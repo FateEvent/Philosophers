@@ -6,15 +6,15 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 18:30:49 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:27:06 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	the_end(pid_t pid)
+void	the_end(t_man *rules)
 {
-	kill(pid, SIGINT);
+	kill(rules->pid, SIGINT);
 	exit(0);
 }
 
@@ -28,7 +28,7 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);
-			the_end(philo->rules->pid);
+			the_end(philo->rules);
 			return (1);
 		}
 	}
@@ -51,7 +51,7 @@ int	death_note(t_sophist *philo)
 			philo->rules->deaths = 1;
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);
-			the_end(philo->rules->pid);
+			the_end(philo->rules);
 			return (1);
 		}
 	}

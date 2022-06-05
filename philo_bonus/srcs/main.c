@@ -6,13 +6,13 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 18:38:52 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 19:06:19 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	launch(pid_t pid, t_man *ph)
+void	launch(t_man *ph)
 {
 	int	i;
 
@@ -22,8 +22,8 @@ void	launch(pid_t pid, t_man *ph)
 	gettimeofday(&ph->start, NULL);
 	while (i < ph->tot)
 	{
-		pid = fork();
-		if (pid < 0)
+		ph->pid = fork();
+		if (ph->pid < 0)
 		{
 			ft_puterror("Error: Failed to create the fork.");
 			sem_unlink("fourchette");
@@ -31,15 +31,15 @@ void	launch(pid_t pid, t_man *ph)
 			sem_close(ph->forks);
 			sem_close(ph->check);
 		}
-		else if (pid == 0)
+		else if (ph->pid == 0)
 			break ;
 		i++;
 	}
-	if (pid == 0)
+	if (ph->pid == 0)
 		happy_hour(ph->pax[i]);
-	else if (pid > 0)
+	else if (ph->pid > 0)
 	{
-		while ((pid = waitpid(-1, NULL, 0)))
+		while ((ph->pid = waitpid(-1, NULL, 0)))
 		{
 			if (errno == ECHILD)
 				break ;
@@ -97,12 +97,11 @@ int	main(int argc, char *argv[])
 		rules = init_all(argv);
 		if (!rules)
 			return (1);
-		rules->pid = 0;
-		launch(rules->pid, rules);
+		launch(rules);
 		while (!rules->deaths)
 			if (check_deaths(rules) || check_meals(rules))
 				break ;
-		the_end(rules->pid);
+		the_end(rules);
 		return (0);
 	}
 }
