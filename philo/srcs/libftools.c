@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 10:57:44 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/26 19:09:35 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:07:05 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,6 @@ int	ft_atoi(const char *nptr)
 	if (counter == 1)
 		res *= -1;
 	return (res);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	unsigned char	*str;
-
-	str = (unsigned char *)s;
-	while (n--)
-		*str++ = (unsigned char)c;
-	return (s);
 }
 
 static void	ft_putendl_fd(const char *str, int fd)

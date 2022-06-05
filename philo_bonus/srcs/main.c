@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 19:06:19 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:49:39 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	launch(t_man *ph)
 	i = 0;
 	ph->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, ph->tot / 2);
 	ph->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
+	ph->writing = sem_open("writing", O_CREAT | O_EXCL, 0644, 1);
 	gettimeofday(&ph->start, NULL);
 	while (i < ph->tot)
 	{
@@ -28,15 +29,21 @@ void	launch(t_man *ph)
 			ft_puterror("Error: Failed to create the fork.");
 			sem_unlink("fourchette");
 			sem_unlink("sem_check");
+			sem_unlink("writing");
 			sem_close(ph->forks);
 			sem_close(ph->check);
+			sem_close(ph->writing);
 		}
 		else if (ph->pid == 0)
 			break ;
 		i++;
 	}
 	if (ph->pid == 0)
+	{
 		happy_hour(ph->pax[i]);
+		if (check_deaths(ph))
+			printf("bau");
+	}
 	else if (ph->pid > 0)
 	{
 		while ((ph->pid = waitpid(-1, NULL, 0)))
@@ -46,8 +53,10 @@ void	launch(t_man *ph)
 		}
 		sem_unlink("fourchette");
 		sem_unlink("sem_check");
+		sem_unlink("writing");
 		sem_close(ph->forks);
 		sem_close(ph->check);
+		sem_close(ph->writing);
 	}
 }
 

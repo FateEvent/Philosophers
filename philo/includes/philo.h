@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/05/28 11:03:22 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 21:06:51 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_man
 	long				num_of_meals;
 }				t_man;
 
-void	*ft_memset(void *s, int c, size_t n);
 void	ft_puterror(const char *str);
 int		ft_atoi(const char *nptr);
 

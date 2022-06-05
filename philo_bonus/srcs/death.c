@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 20:27:06 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:51:52 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	the_end(t_man *rules)
 {
-	kill(rules->pid, SIGINT);
+//	kill(rules->pid, SIGINT);
+	(void)rules;
+	kill(0, SIGKILL);
 	exit(0);
 }
 

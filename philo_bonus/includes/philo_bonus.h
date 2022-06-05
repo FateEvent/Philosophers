@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 19:05:42 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 20:36:39 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_man
 	struct s_sophist	*pax[200];
 	sem_t				*forks;
 	sem_t				*check;
+	sem_t				*writing;
 	pid_t				pid;
 	struct timeval		start;
 	long long			time_to_die;
