@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 15:36:20 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 17:07:44 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ int	check_deaths(t_man *rules)
 	int	i;
 
 	i = 0;
+	sem_wait(rules->check);
 	while (i < rules->tot)
 	{
 		if (rules->pax[i]->dead > 0)
+		{
+			sem_post(rules->check);
 			return (1);
+		}
 		i++;
 	}
+	sem_post(rules->check);
 	return (0);
 }
 
@@ -62,9 +67,12 @@ int	check_meals(t_man *rules)
 
 int	check_program_end(t_sophist	*ph)
 {
+	sem_wait(ph->rules->check);
 	if (ph->rules->deaths > 0)
 	{
+		sem_post(ph->rules->check);
 		return (1);
 	}
+	sem_post(ph->rules->check);
 	return (0);
 }

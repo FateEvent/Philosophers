@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 16:43:23 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:38:52 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	launch(pid_t pid, t_man *ph)
 
 	i = 0;
 	ph->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, ph->tot / 2);
+	ph->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
 	gettimeofday(&ph->start, NULL);
 	while (i < ph->tot)
 	{
@@ -26,16 +27,28 @@ void	launch(pid_t pid, t_man *ph)
 		{
 			ft_puterror("Error: Failed to create the fork.");
 			sem_unlink("fourchette");
+			sem_unlink("sem_check");
 			sem_close(ph->forks);
+			sem_close(ph->check);
 		}
 		else if (pid == 0)
 			break ;
 		i++;
 	}
 	if (pid == 0)
-		routine(ph->pax[i]);
-	else
-		happy_hour(ph->pax[i], ph->pax[i]->rules);
+		happy_hour(ph->pax[i]);
+	else if (pid > 0)
+	{
+		while ((pid = waitpid(-1, NULL, 0)))
+		{
+			if (errno == ECHILD)
+				break ;
+		}
+		sem_unlink("fourchette");
+		sem_unlink("sem_check");
+		sem_close(ph->forks);
+		sem_close(ph->check);
+	}
 }
 
 static void	ft_update_struct(t_man *ph, char *argv[])
@@ -78,19 +91,18 @@ t_man	*init_all(char *argv[])
 int	main(int argc, char *argv[])
 {
 	t_man	*rules;
-	pid_t	pid;
 
 	if (check_args(argc, argv))
 	{
 		rules = init_all(argv);
 		if (!rules)
 			return (1);
-		pid = 0;
-		launch(pid, rules);
+		rules->pid = 0;
+		launch(rules->pid, rules);
 		while (!rules->deaths)
 			if (check_deaths(rules) || check_meals(rules))
 				break ;
-		the_end(rules);
+		the_end(rules->pid);
 		return (0);
 	}
 }

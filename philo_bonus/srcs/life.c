@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 15:58:30 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/05 18:17:00 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,4 @@ void	eat(t_sophist philo)
 	gettimeofday(&philo.acting, NULL);
 	countdown(philo, rules.time_to_eat);
 	sem_post(rules.forks);
-}
-
-void	*routine(t_sophist *philo)
-{
-	t_man		*rules;
-
-	rules = philo->rules;
-	happy_hour(philo, rules);
-	while (!check_program_end(philo))
-	{
-		eat(*philo);
-		if (rules->deaths)
-			break ;
-		gettimeofday(&philo->last_meal, NULL);
-		philo->meals_num++;
-		think(*philo);
-		if (rules->deaths)
-			break ;
-		ft_sleep(*philo);
-		if (rules->deaths)
-			break ;
-	}
-	return (NULL);
 }
