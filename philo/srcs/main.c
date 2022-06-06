@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 16:43:43 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 11:49:44 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_man	*init_all(char *argv[])
 	i = 0;
 	while (i < ph->tot)
 	{
-		ph->pax[i] = (t_sophist *)malloc((sizeof(*ph->pax[i])));
+		ph->pax[i] = (t_sophist *)malloc(sizeof(*ph->pax[i]));
 		if (!ph->pax[i])
 			return (NULL);
 		ph->pax[i]->id = i;
