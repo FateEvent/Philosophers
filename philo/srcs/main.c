@@ -6,66 +6,66 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 11:49:44 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:24:11 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	launch(t_man *ph)
+void	launch(t_man *rules)
 {
 	int	i;
 
 	i = 0;
-	gettimeofday(&ph->start, NULL);
-	while (i < ph->tot)
+	gettimeofday(&rules->start, NULL);
+	while (i < rules->tot)
 	{
-		if (pthread_create(&ph->pax[i]->pt, NULL, &routine, ph->pax[i]) != 0)
+		if (pthread_create(&rules->pax[i]->pt, NULL, &routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
 		i++;
 	}
 }
 
-static void	ft_update_struct(t_man *ph, char *argv[])
+static void	ft_update_struct(t_man *rules, char *argv[])
 {
-	ph->tot = ft_atoi(argv[1]);
-	ph->deaths = 0;
-	ph->time_to_die = ft_atoi(argv[2]);
-	ph->time_to_eat = ft_atoi(argv[3]);
-	ph->time_to_sleep = ft_atoi(argv[4]);
+	rules->tot = ft_atoi(argv[1]);
+	rules->deaths = 0;
+	rules->time_to_die = ft_atoi(argv[2]);
+	rules->time_to_eat = ft_atoi(argv[3]);
+	rules->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
-		ph->num_of_meals = ft_atoi(argv[5]);
+		rules->num_of_meals = ft_atoi(argv[5]);
 	else
-		ph->num_of_meals = -1;
+		rules->num_of_meals = -1;
 }
 
 t_man	*init_all(char *argv[])
 {
-	t_man	*ph;
+	t_man	*rules;
 	int		i;
 
-	ph = (t_man *)malloc(sizeof(*ph) * ft_atoi(argv[1]));
-	if (!ph)
+	rules = (t_man *)malloc(sizeof(*rules) * ft_atoi(argv[1]));
+	if (!rules)
 		return (NULL);
-	ft_update_struct(ph, argv);
+	ft_update_struct(rules, argv);
 	i = 0;
-	while (i < ph->tot)
+	while (i < rules->tot)
 	{
-		ph->pax[i] = (t_sophist *)malloc(sizeof(*ph->pax[i]));
-		if (!ph->pax[i])
+		rules->pax[i] = (t_sophist *)malloc(sizeof(*rules->pax[i]));
+		if (!rules->pax[i])
 			return (NULL);
-		ph->pax[i]->id = i;
-		ph->pax[i]->left_fork = i;
-		ph->pax[i]->right_fork = (i + 1) % ph->tot;
-		ph->pax[i]->meals_num = 0;
-		ph->pax[i]->dead = 0;
-		ph->pax[i]->rules = ph;
-		pthread_mutex_init(&ph->forks[i], NULL);
+		rules->pax[i]->id = i;
+		rules->pax[i]->left_fork = i;
+		rules->pax[i]->right_fork = (i + 1) % rules->tot;
+		rules->pax[i]->meals_num = 0;
+		rules->pax[i]->dead = 0;
+		rules->pax[i]->rules = rules;
+		pthread_mutex_init(&rules->forks[i], NULL);
 		i++;
 	}
-	pthread_mutex_init(&ph->writing, NULL);
-	pthread_mutex_init(&ph->check, NULL);
-	return (ph);
+	pthread_mutex_init(&rules->writing, NULL);
+	pthread_mutex_init(&rules->check, NULL);
+	return (rules);
 }
 
 int	main(int argc, char *argv[])

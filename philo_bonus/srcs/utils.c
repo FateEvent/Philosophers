@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 12:10:26 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:20:50 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ int	check_meals(t_man *rules)
 int	check_program_end(t_sophist	*ph)
 {
 	sem_wait(ph->rules->check);
-	if (ph->dead > 0 || check_meals(ph->rules))
+	if (check_deaths(ph->rules) || check_meals(ph->rules))
 	{
+		printf("bambambam\n");
 		sem_post(ph->rules->check);
 		kill(ph->rules->pid, SIGINT);
 		return (1);

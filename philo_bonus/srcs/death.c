@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 12:10:55 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:14:36 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 	{
 		if (time_diff(&philo->rules->start, &now) > philo->rules->time_to_die)
 		{
+			printf("pappa 2");
 			philo->dead = 1;
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);
-//			the_end(philo->rules);
+			the_end(philo->rules);
 			kill(philo->rules->pid, SIGINT);
 			return (1);
 		}
@@ -45,8 +46,10 @@ int	death_note(t_sophist *philo)
 	sem_wait(philo->rules->check);
 	if (philo->meals_num > 0)
 	{
+//		printf("%ld\n", time_diff(&philo->last_meal, &now));
 		if (time_diff(&philo->last_meal, &now) > philo->rules->time_to_die)
 		{
+			printf("pappa");
 			philo->dead = 1;
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);

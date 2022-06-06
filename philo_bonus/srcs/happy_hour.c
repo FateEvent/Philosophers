@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:12:27 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 12:11:56 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 13:25:31 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	solitude(t_sophist *philo)
 
 void	*happy_hour(t_sophist *philo)
 {
-	t_man		*rules;
+	t_man	*rules;
 
 	rules = philo->rules;
 	while (!check_program_end(philo))
