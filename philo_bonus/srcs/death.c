@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 14:49:33 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:57:13 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	the_end(t_man *rules)
 {
-	kill(rules->pid, SIGINT);
+//	kill(rules->pid, SIGINT);
+	(void)rules;
 	exit(0);
 }
 
@@ -29,8 +30,9 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);
 			the_end(philo->rules);
-			kill(philo->rules->pid, SIGINT);
-			return (1);
+//			kill(philo->rules->pid, SIGINT);
+//			return (1);
+			exit(1);
 		}
 	}
 	return (0);
@@ -53,8 +55,9 @@ int	death_note(t_sophist *philo)
 			take_notes(*philo, "has died");
 			sem_post(philo->rules->check);
 //			the_end(philo->rules);
-			kill(philo->rules->pid, SIGINT);
-			return (1);
+//			kill(philo->rules->pid, SIGINT);
+			exit(1);
+//			return (1);
 		}
 	}
 	else if (philo->meals_num == 0)

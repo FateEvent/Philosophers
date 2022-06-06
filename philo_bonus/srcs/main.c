@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 15:22:44 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 15:50:17 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	launch(t_man *rules)
 	rules->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, rules->tot / 2);
 	rules->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
 	rules->writing = sem_open("writing", O_CREAT | O_EXCL, 0644, 1);
-//	gettimeofday(&rules->start, NULL);
+	gettimeofday(&rules->start, NULL);
 	while (i < rules->tot)
 	{
 		rules->pid = fork();
@@ -36,7 +36,7 @@ void	launch(t_man *rules)
 		}
 		else if (rules->pid == 0)
 		{
-			gettimeofday(&rules->start, NULL);
+//			gettimeofday(&rules->start, NULL);
 			rules->pax = (t_sophist *)malloc(sizeof(*rules->pax));
 			if (!rules->pax)
 				return ;
