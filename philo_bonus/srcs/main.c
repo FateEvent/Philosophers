@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 20:49:39 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:13:10 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,20 @@ void	launch(t_man *ph)
 		}
 		else if (ph->pid == 0)
 			break ;
+		ph->pax = (t_sophist *)malloc(sizeof(*ph->pax));
+		if (!ph->pax)
+			return ;
+		ph->pax->id = i;
+		ph->pax->meals_num = 0;
+		ph->pax->dead = 0;
+		ph->pax->rules = ph;
 		i++;
 	}
 	if (ph->pid == 0)
+		happy_hour(ph->pax);
+	else
 	{
-		happy_hour(ph->pax[i]);
-		if (check_deaths(ph))
-			printf("bau");
-	}
-	else if (ph->pid > 0)
-	{
-		while ((ph->pid = waitpid(-1, NULL, 0)))
+		while (waitpid(-1, NULL, 0))
 		{
 			if (errno == ECHILD)
 				break ;
@@ -63,7 +66,6 @@ void	launch(t_man *ph)
 static void	ft_update_struct(t_man *ph, char *argv[])
 {
 	ph->tot = ft_atoi(argv[1]);
-	ph->deaths = 0;
 	ph->time_to_die = ft_atoi(argv[2]);
 	ph->time_to_eat = ft_atoi(argv[3]);
 	ph->time_to_sleep = ft_atoi(argv[4]);
@@ -83,17 +85,6 @@ t_man	*init_all(char *argv[])
 		return (NULL);
 	ft_update_struct(ph, argv);
 	i = 0;
-	while (i < ph->tot)
-	{
-		ph->pax[i] = (t_sophist *)malloc((sizeof(*ph->pax[i])));
-		if (!ph->pax[i])
-			return (NULL);
-		ph->pax[i]->id = i;
-		ph->pax[i]->meals_num = 0;
-		ph->pax[i]->dead = 0;
-		ph->pax[i]->rules = ph;
-		i++;
-	}
 	return (ph);
 }
 
@@ -107,7 +98,7 @@ int	main(int argc, char *argv[])
 		if (!rules)
 			return (1);
 		launch(rules);
-		while (!rules->deaths)
+		while (!rules->pax->dead)
 			if (check_deaths(rules) || check_meals(rules))
 				break ;
 		the_end(rules);

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 20:36:39 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:09:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <sys/time.h>
+# include <sys/wait.h>
 # include <semaphore.h>
 # include <signal.h>
 # include <errno.h>
@@ -34,8 +35,7 @@ typedef struct s_sophist
 typedef struct s_man
 {
 	int					tot;
-	int					deaths;
-	struct s_sophist	*pax[200];
+	struct s_sophist	*pax;
 	sem_t				*forks;
 	sem_t				*check;
 	sem_t				*writing;

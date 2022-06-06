@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 20:31:55 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/06 12:10:26 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,11 @@ int	check_deaths(t_man *rules)
 
 	i = 0;
 	sem_wait(rules->check);
-	while (i < rules->tot)
+	if (rules->pax->dead > 0)
 	{
-		if (rules->pax[i]->dead > 0)
-		{
-			sem_post(rules->check);
-			return (1);
-		}
-		i++;
+		sem_post(rules->check);
+		kill(rules->pid, SIGINT);
+		return (1);
 	}
 	sem_post(rules->check);
 	return (0);
@@ -60,22 +57,19 @@ int	check_meals(t_man *rules)
 	if (rules->num_of_meals < 0)
 		return (0);
 	cmp = rules->num_of_meals;
-	while (i < rules->tot)
-	{
-		if (rules->pax[i]->meals_num < cmp)
-			return (0);
-		i++;
-	}
-	rules->deaths = 1;
+	if (rules->pax->meals_num <= cmp)
+		return (0);
+	kill(rules->pid, SIGINT);
 	return (1);
 }
 
 int	check_program_end(t_sophist	*ph)
 {
 	sem_wait(ph->rules->check);
-	if (ph->rules->deaths > 0)
+	if (ph->dead > 0 || check_meals(ph->rules))
 	{
 		sem_post(ph->rules->check);
+		kill(ph->rules->pid, SIGINT);
 		return (1);
 	}
 	sem_post(ph->rules->check);
