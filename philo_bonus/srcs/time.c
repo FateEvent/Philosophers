@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 14:46:30 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:36:02 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	timecount(t_sophist philo, long duration)
 	usec = philo.acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
 	while (length_diff(get_the_time(), time) < duration && !death_note(&philo))
-//		usleep(50);
-		;
+		usleep(50);
 }
 
 void	countdown(t_sophist philo, long duration)
@@ -79,6 +78,5 @@ void	countdown(t_sophist philo, long duration)
 	usec = philo.acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
 	while (length_diff(get_the_time(), time) < duration)
-		//usleep(50);
-		;
+		usleep(50);
 }

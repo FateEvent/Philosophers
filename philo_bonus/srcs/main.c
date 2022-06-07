@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 15:50:17 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:45:50 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	launch(t_man *rules)
 		}
 		else if (rules->pid == 0)
 		{
-//			gettimeofday(&rules->start, NULL);
 			rules->pax = (t_sophist *)malloc(sizeof(*rules->pax));
 			if (!rules->pax)
 				return ;
