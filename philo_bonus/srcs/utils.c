@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 14:54:20 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 10:30:07 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ int	check_deaths(t_man *rules)
 
 	i = 0;
 	sem_wait(rules->check);
-	if (rules->pax->dead > 0)
+	if (rules->data->dead > 0)
 	{
 		sem_post(rules->check);
-		kill(rules->pid, SIGINT);
+//		kill(rules->pid, SIGINT);
 		return (1);
 	}
 	sem_post(rules->check);
@@ -57,20 +57,20 @@ int	check_meals(t_man *rules)
 	if (rules->num_of_meals < 0)
 		return (0);
 	cmp = rules->num_of_meals;
-	if (rules->pax->meals_num <= cmp)
+	if (rules->data->meals_num <= cmp)
 		return (0);
-	kill(rules->pid, SIGINT);
+	// kill(rules->pid, SIGINT);
 	return (1);
 }
 
-int	check_program_end(t_sophist	*ph)
+int	check_program_end(t_data *ph)
 {
 	sem_wait(ph->rules->check);
 	if (check_deaths(ph->rules) || check_meals(ph->rules))
 	{
 		printf("bambambam\n");
 		sem_post(ph->rules->check);
-		kill(ph->rules->pid, SIGINT);
+//		kill(ph->rules->pid, SIGINT);
 		return (1);
 	}
 	sem_post(ph->rules->check);

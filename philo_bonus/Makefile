@@ -6,7 +6,7 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/06/05 18:16:05 by faventur         ###   ########.fr        #
+#    Updated: 2022/06/15 11:08:53 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ OBJS = $(addprefix srcs/, ${SRCS:.c=.o})
 
 FLAGS = -Wall -Wextra -Werror -g3
 DANGER = -fsanitize=address
+
+LINKS = -lpthread
 
 RM = rm -f
 
@@ -31,7 +33,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@echo "$(HIGREEN)No! Try not! Do! Or do not! There is no try.$(NONE)"
 	@echo "$(CURSIVE)Master Yoda$(NONE)"
-	@gcc $(DANGER) $(OBJS) -o $(NAME)
+	@gcc $(DANGER) $(OBJS) $(LINKS) -o $(NAME)
 	@echo "$(HIBLUE)Philosopher, c'est apprendre à mourir.$(NONE)"
 	@echo "Montaigne, $(CURSIVE)Les Essais$(NONE)"
 	@rm $(OBJS)

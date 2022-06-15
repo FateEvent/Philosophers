@@ -6,13 +6,13 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 14:45:29 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 11:09:52 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	take_notes(t_sophist philo, char *msg)
+void	take_notes(t_data philo, char *msg)
 {
 	t_man			rules;
 	struct timeval	now;
@@ -24,21 +24,19 @@ void	take_notes(t_sophist philo, char *msg)
 	sem_post(rules.writing);
 }
 
-void	ft_sleep(t_sophist philo)
+void	ft_sleep(t_data philo)
 {
 	take_notes(philo, "is sleeping");
 	gettimeofday(&philo.acting, NULL);
 	timecount(philo, philo.rules->time_to_sleep);
 }
 
-void	think(t_sophist philo)
+void	think(t_data philo)
 {
-//	printf("ça va s'arreter");
-//	kill(philo.rules->pid, SIGINT);
 	take_notes(philo, "is thinking");
 }
 
-void	eat(t_sophist philo)
+void	eat(t_data philo)
 {
 	t_man	rules;
 

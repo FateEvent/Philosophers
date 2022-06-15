@@ -6,13 +6,13 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:12:27 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 15:18:36 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 10:28:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	solitude(t_sophist *philo)
+void	solitude(t_data *philo)
 {
 	t_man	*rules;
 
@@ -21,7 +21,7 @@ void	solitude(t_sophist *philo)
 	timecount(*philo, rules->time_to_die);
 }
 
-void	*happy_hour(t_sophist *philo)
+void	*happy_hour(t_data *philo)
 {
 	t_man	*rules;
 

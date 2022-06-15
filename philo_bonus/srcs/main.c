@@ -6,25 +6,37 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/07 16:45:50 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 11:17:03 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	launch(t_man *rules)
+void	*wait_pid_end(void *rules)
 {
-	int	i;
+	int		i;
+	t_man	*ptr;
 
 	i = 0;
-	rules->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, rules->tot / 2);
-	rules->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
-	rules->writing = sem_open("writing", O_CREAT | O_EXCL, 0644, 1);
-	gettimeofday(&rules->start, NULL);
+	ptr = rules;
+	while (i < ptr->tot)
+	{
+		waitpid(ptr->data->pid[i], NULL, 0);
+		++i;
+	}
+	exit(0);
+}
+
+void	process_init(t_man *rules)
+{
+	pthread_t	pt;
+	int			i;
+
+	i = 0;
 	while (i < rules->tot)
 	{
-		rules->pid = fork();
-		if (rules->pid < 0)
+		rules->data->pid[i] = fork();
+		if (rules->data->pid[i] < 0)
 		{
 			ft_puterror("Error: Failed to create the fork.");
 			sem_unlink("fourchette");
@@ -34,36 +46,36 @@ void	launch(t_man *rules)
 			sem_close(rules->check);
 			sem_close(rules->writing);
 		}
-		else if (rules->pid == 0)
+		if (rules->data->pid[i] == 0)
 		{
-			rules->pax = (t_sophist *)malloc(sizeof(*rules->pax));
-			if (!rules->pax)
-				return ;
-			rules->pax->id = i;
-			rules->pax->meals_num = 0;
-			rules->pax->dead = 0;
-			rules->pax->rules = rules;
-			break ;
+			happy_hour(rules->data);
+			exit(0);
 		}
-		i++;
+		if (i % 2 == 0)
+			usleep(rules->time_to_eat);
+		++i;
+		++rules->data->id;
 	}
-	if (rules->pid == 0)
-		happy_hour(rules->pax);
-	else
-	{
-		printf("je suis moi!");
-		while (waitpid(-1, NULL, 0))
-		{
-			if (errno == ECHILD)
-				break ;
-		}
-		sem_unlink("fourchette");
-		sem_unlink("sem_check");
-		sem_unlink("writing");
-		sem_close(rules->forks);
-		sem_close(rules->check);
-		sem_close(rules->writing);
-	}
+	if (pthread_create(&pt, NULL, &wait_pid_end, rules) != 0)
+		ft_puterror("Error: Failed to create the thread.");
+	pthread_detach(pt);
+}
+
+void	semaphore_init(t_man *rules)
+{
+	sem_unlink("fourchette");
+	sem_unlink("sem_check");
+	sem_unlink("writing");
+	rules->forks = sem_open("fourchette", O_CREAT, 0644, rules->tot / 2);
+	rules->check = sem_open("sem_check", O_CREAT, 0644, 1);
+	rules->writing = sem_open("writing", O_CREAT, 0644, 1);
+}
+
+void	launch(t_man *rules)
+{
+	semaphore_init(rules);
+	gettimeofday(&rules->start, NULL);
+	process_init(rules);
 }
 
 t_man	*init_all(char *argv[])
@@ -81,6 +93,17 @@ t_man	*init_all(char *argv[])
 		rules->num_of_meals = ft_atoi(argv[5]);
 	else
 		rules->num_of_meals = -1;
+	rules->data = (t_data *)malloc(sizeof(*rules->data));
+	if (!rules->data)
+		return (NULL);
+	rules->data->meals_num = 0;
+	rules->data->dead = 0;
+	rules->data->id = 0;
+	rules->data->pid = malloc(sizeof(pid_t) * rules->tot);
+	if (!rules->data->pid)
+		return (NULL);
+	ft_memset(rules->data->pid, '\0', sizeof(pid_t) * rules->tot);
+	rules->data->rules = rules;
 	return (rules);
 }
 
@@ -94,11 +117,6 @@ int	main(int argc, char *argv[])
 		if (!rules)
 			return (1);
 		launch(rules);
-		/*
-		while (!rules->pax->dead)
-			;
-		the_end(rules);
-		*/
 		return (0);
 	}
 }
