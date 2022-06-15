@@ -6,22 +6,18 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 15:23:09 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:25:18 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	launch(t_man *rules)
+void	*wait_pid_end(void *rules)
 {
 	pthread_t	pt;
 	int			i;
 
 	i = 0;
-	rules->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, rules->tot / 2);
-	rules->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
-	rules->writing = sem_open("writing", O_CREAT | O_EXCL, 0644, 1);
-	gettimeofday(&rules->start, NULL);
 	while (i < rules->tot)
 	{
 		rules->pid[i] = fork();
@@ -83,11 +79,6 @@ int	main(int argc, char *argv[])
 		if (!rules)
 			return (1);
 		launch(rules);
-		/*
-		while (!rules->pax->dead)
-			;
-		the_end(rules);
-		*/
 		return (0);
 	}
 }
