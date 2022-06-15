@@ -6,13 +6,14 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/06 12:09:21 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:15:25 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
+# include <pthread.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
@@ -39,7 +40,7 @@ typedef struct s_man
 	sem_t				*forks;
 	sem_t				*check;
 	sem_t				*writing;
-	pid_t				pid;
+	pid_t				pid[200];
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
@@ -58,6 +59,8 @@ void	ft_sleep(t_sophist philo);
 void	take_notes(t_sophist philo, char *msg);
 void	solitude(t_sophist *philo);
 void	the_end(t_man *rules);
+
+void	*wait_pid_end(void *rules);
 
 t_man	*init_all(char *argv[]);
 void	launch(t_man *ph);
