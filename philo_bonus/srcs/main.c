@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 11:17:03 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:00:16 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	process_init(t_man *rules)
 		++i;
 		++rules->data->id;
 	}
-	if (pthread_create(&pt, NULL, &wait_pid_end, rules) != 0)
+	if (pthread_create(&pt, NULL, &wait_pid_end, rules))
 		ft_puterror("Error: Failed to create the thread.");
 	pthread_detach(pt);
 }

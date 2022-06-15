@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 10:59:50 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 11:36:04 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	the_game_ends(t_man *rules)
 	int	i;
 
 	i = 0;
+	printf("qui!bim\n");
 	while (i < rules->tot)
 	{
 		kill(rules->data->pid[i], SIGKILL);

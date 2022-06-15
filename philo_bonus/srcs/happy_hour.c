@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:12:27 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 10:28:21 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:03:13 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	*happy_hour(t_data *philo)
 {
 	t_man	*rules;
 
+	printf("ici!\n");
 	rules = philo->rules;
 	while (!check_program_end(philo))
 	{
