@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 10:29:00 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/07 16:36:02 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ long	get_the_time(void)
 	return (sec * 1000 + usec / 1000);
 }
 
-void	timecount(t_data philo, long duration)
+void	timecount(t_sophist philo, long duration)
 {
 	long	sec;
 	long	usec;
@@ -68,7 +68,7 @@ void	timecount(t_data philo, long duration)
 		usleep(50);
 }
 
-void	countdown(t_data philo, long duration)
+void	countdown(t_sophist philo, long duration)
 {
 	long	sec;
 	long	usec;

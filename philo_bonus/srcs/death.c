@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 15:26:05 by faventur         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:22:42 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	the_end(t_man *rules)
 	exit(0);
 }
 
-static int	death_note_pt2(struct timeval now, t_data *philo)
+static int	death_note_pt2(struct timeval now, t_sophist *philo)
 {
 	if (philo->meals_num == 0)
 	{
@@ -65,7 +65,7 @@ static int	death_note_pt2(struct timeval now, t_data *philo)
 	return (0);
 }
 
-int	death_note(t_data *philo)
+int	death_note(t_sophist *philo)
 {
 	struct timeval	now;
 	int				ret;
