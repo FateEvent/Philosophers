@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 15:22:42 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:50:28 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ void	the_end(t_man *rules)
 		kill(rules->pid[i], SIGINT);
 		i++;
 	}
-	sem_unlink("fourchette");
-	sem_unlink("sem_check");
-	sem_unlink("writing");
+	waitpid(-1, NULL, 0);
 	sem_close(rules->forks);
 	sem_close(rules->check);
 	sem_close(rules->writing);
