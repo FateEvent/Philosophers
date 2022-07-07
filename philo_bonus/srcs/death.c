@@ -6,12 +6,32 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/05 17:50:28 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:55:28 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+/*
+void	*check_fate(void *rules)
+{
+	t_man	*ptr;
+	int		i;
 
+	i = 0;
+	ptr = rules;
+	while (42)
+	{
+//		printf("1: %d, %d\n", check_deaths(ptr), check_meals(ptr));
+		if (check_deaths(ptr) || check_meals(ptr))
+		{
+			printf("2: %d, %d\n", check_deaths(ptr), check_meals(ptr));
+			sem_post(ptr->check);
+			break ;
+		}
+	}
+	exit(0);
+}
+*/
 void	*wait_pid_end(void *rules)
 {
 	t_man	*ptr;
@@ -24,7 +44,7 @@ void	*wait_pid_end(void *rules)
 		waitpid(ptr->pid[i], NULL, 0);
 		++i;
 	}
-	exit(0);
+	return (NULL);
 }
 
 void	the_end(t_man *rules)
@@ -41,8 +61,8 @@ void	the_end(t_man *rules)
 	sem_close(rules->forks);
 	sem_close(rules->check);
 	sem_close(rules->writing);
-	free(rules->pax);
-	free(rules->pid);
+//	free(rules->pax);
+//	free(rules->pid);
 	exit(0);
 }
 
@@ -50,14 +70,15 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 {
 	if (philo->meals_num == 0)
 	{
-		if (time_diff(&philo->rules->start, &now) > philo->rules->time_to_die)
+		if (ft_get_time(philo) - philo->runtime > philo->rules->time_to_die)
 		{
-			printf("pappa 2");
+			sem_wait(philo->rules->writing);
+			printf("pappa 2\n");
 			philo->dead = 1;
-			take_notes(*philo, "has died");
+//			take_notes(*philo, "has died");
+			printf("%ld %d %s\n", time_diff(&philo->rules->start, &now), philo->id + 1, "has died");
 			sem_post(philo->rules->check);
-			the_end(philo->rules);
-//			return (1);
+			return (1);
 		}
 	}
 	return (0);
@@ -70,17 +91,15 @@ int	death_note(t_sophist *philo)
 
 	ret = 0;
 	gettimeofday(&now, NULL);
-	sem_wait(philo->rules->check);
 	if (philo->meals_num > 0)
 	{
-//		printf("%ld\n", time_diff(&philo->last_meal, &now));
-		if (time_diff(&philo->last_meal, &now) > philo->rules->time_to_die)
+		if (ft_get_time(philo) - philo->last_meal > philo->rules->time_to_die)
 		{
+			sem_wait(philo->rules->writing);
 			philo->dead = 1;
-			take_notes(*philo, "has died");
+			printf("%lld %d %s\n", ft_get_time(philo), philo->id + 1, "has died");
 			sem_post(philo->rules->check);
-			the_end(philo->rules);
-//			return (1);
+			return (1);
 		}
 	}
 	else if (philo->meals_num == 0)

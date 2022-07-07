@@ -6,11 +6,20 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/05 17:45:47 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:26:18 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+long long	ft_get_time(t_sophist *philo)
+{
+	long long	ms;
+
+	gettimeofday(&philo->tva, NULL);
+	ms = (philo->tva.tv_sec * (uint64_t)1000) + (philo->tva.tv_usec / 1000);
+	return (ms - philo->runtime);
+}
 
 void	launch(t_man *rules)
 {
@@ -18,19 +27,19 @@ void	launch(t_man *rules)
 	int			i;
 
 	i = 0;
-	rules->forks = sem_open("fourchette", O_CREAT | O_EXCL, 0644, rules->tot / 2);
-	rules->check = sem_open("sem_check", O_CREAT | O_EXCL, 0644, 1);
-	rules->writing = sem_open("writing", O_CREAT | O_EXCL, 0644, 1);
-	gettimeofday(&rules->start, NULL);
+	sem_unlink("fourchette");
+	sem_unlink("sem_check");
+	sem_unlink("writing");
+	rules->forks = sem_open("fourchette", O_CREAT, 0644, rules->tot);
+	rules->check = sem_open("sem_check", O_CREAT, 0644, 0);
+	rules->writing = sem_open("writing", O_CREAT, 0644, 1);
+	rules->pax->runtime = ft_get_time(rules->pax);
 	while (i < rules->tot)
 	{
 		rules->pid[i] = fork();
 		if (rules->pid[i] < 0)
 		{
 			ft_puterror("Error: Failed to create the fork.");
-			sem_unlink("fourchette");
-			sem_unlink("sem_check");
-			sem_unlink("writing");
 			sem_close(rules->forks);
 			sem_close(rules->check);
 			sem_close(rules->writing);
@@ -46,6 +55,7 @@ void	launch(t_man *rules)
 		i++;
 	}
 	pthread_create(&pt, NULL, wait_pid_end, rules);
+//	pthread_create(&pt, NULL, check_fate, rules);
 	pthread_detach(pt);
 }
 
@@ -64,9 +74,10 @@ t_man	*init_all(char *argv[])
 		rules->num_of_meals = ft_atoi(argv[5]);
 	else
 		rules->num_of_meals = -1;
-	rules->pax = (t_sophist *)malloc(sizeof(*rules->pax));
+	rules->pax = malloc(sizeof(*rules->pax));
 	if (!rules->pax)
 		return (NULL);
+	rules->pax->runtime = 0;
 	rules->pax->meals_num = 0;
 	rules->pax->dead = 0;
 	rules->pax->rules = rules;
@@ -83,6 +94,8 @@ int	main(int argc, char *argv[])
 		if (!rules)
 			return (1);
 		launch(rules);
+		sem_wait(rules->check);
+		printf("chiuso!\n");
 		the_end(rules);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/15 15:15:25 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 12:52:34 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ typedef struct s_sophist
 	int				id;
 	int				dead;
 	long			meals_num;
+	long long		runtime;
+	struct timeval	tva;
 	struct timeval	acting;
-	struct timeval	last_meal;
+	long long		last_meal;
 	struct s_man	*rules;
 }				t_sophist;
 
@@ -48,34 +50,36 @@ typedef struct s_man
 	long				num_of_meals;
 }				t_man;
 
-void	*ft_memset(void *s, int c, size_t n);
-void	ft_puterror(const char *str);
-int		ft_atoi(const char *nptr);
+void		*ft_memset(void *s, int c, size_t n);
+void		ft_puterror(const char *str);
+int			ft_atoi(const char *nptr);
 
-void	*happy_hour(t_sophist *philo);
-void	eat(t_sophist philo);
-void	think(t_sophist philo);
-void	ft_sleep(t_sophist philo);
-void	take_notes(t_sophist philo, char *msg);
-void	solitude(t_sophist *philo);
-void	the_end(t_man *rules);
+void		*happy_hour(t_sophist *philo);
+void		eat(t_sophist philo);
+void		think(t_sophist philo);
+void		ft_sleep(t_sophist philo);
+void		take_notes(t_sophist philo, char *msg);
+void		solitude(t_sophist *philo);
+void		the_end(t_man *rules);
 
-void	*wait_pid_end(void *rules);
+void		*wait_pid_end(void *rules);
+void		*check_fate(void *rules);
 
-t_man	*init_all(char *argv[]);
-void	launch(t_man *ph);
+t_man		*init_all(char *argv[]);
+void		launch(t_man *ph);
 
-void	timecount(t_sophist philo, long duration);
-void	countdown(t_sophist philo, long duration);
-long	time_diff(struct timeval *start, struct timeval *end);
-long	length_diff(long present, long past);
-long	get_the_time(void);
-int		time_goes_by(struct timeval *time, long standard);
+void		timecount(t_sophist philo, long duration);
+void		countdown(t_sophist philo, long duration);
+long		time_diff(struct timeval *start, struct timeval *end);
+long		length_diff(long present, long past);
+long		get_the_time(void);
+int			time_goes_by(struct timeval *time, long standard);
+long long	ft_get_time(t_sophist *philo);
 
-int		check_program_end(t_sophist	*ph);
-int		check_meals(t_man *rules);
-int		check_deaths(t_man *rules);
-int		death_note(t_sophist *philo);
-int		check_args(int argc, char *argv[]);
+int			check_program_end(t_sophist	*ph);
+int			check_meals(t_man *rules);
+int			check_deaths(t_man *rules);
+int			death_note(t_sophist *philo);
+int			check_args(int argc, char *argv[]);
 
 #endif
