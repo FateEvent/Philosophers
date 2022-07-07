@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 13:57:42 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:16:43 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ void	the_end(t_man *rules)
 	sem_close(rules->forks);
 	sem_close(rules->check);
 	sem_close(rules->writing);
+	free(rules->pax);
+	rules->pax = NULL;
+	free(rules);
+	rules = NULL;
 	exit(0);
 }
 

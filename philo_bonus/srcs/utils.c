@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 13:57:28 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:55:28 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,4 @@ int	check_meals(t_man *rules)
 		return (0);
 	sem_post(rules->check);
 	return (1);
-}
-
-int	check_program_end(t_sophist	*ph)
-{
-	if (check_deaths(ph->rules) || check_meals(ph->rules))
-	{
-		sem_post(ph->rules->check);
-		return (1);
-	}
-	return (0);
 }

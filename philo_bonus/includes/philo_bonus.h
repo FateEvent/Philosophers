@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 12:52:34 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:55:35 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ typedef struct s_sophist
 	int				dead;
 	long			meals_num;
 	long long		runtime;
+	long long		last_meal;
 	struct timeval	tva;
 	struct timeval	acting;
-	long long		last_meal;
 	struct s_man	*rules;
 }				t_sophist;
 
@@ -76,7 +76,6 @@ long		get_the_time(void);
 int			time_goes_by(struct timeval *time, long standard);
 long long	ft_get_time(t_sophist *philo);
 
-int			check_program_end(t_sophist	*ph);
 int			check_meals(t_man *rules);
 int			check_deaths(t_man *rules);
 int			death_note(t_sophist *philo);

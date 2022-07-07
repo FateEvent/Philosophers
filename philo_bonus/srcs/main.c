@@ -6,11 +6,38 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 13:57:22 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:59:01 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	starting_block_ft(t_man *rules)
+{
+	int	i;
+
+	i = 0;
+	while (i < rules->tot)
+	{
+		rules->pid[i] = fork();
+		if (rules->pid[i] < 0)
+		{
+			ft_puterror("Error: Failed to create the fork.");
+			sem_close(rules->forks);
+			sem_close(rules->check);
+			sem_close(rules->writing);
+		}
+		if (rules->pid[i] == 0)
+		{
+			rules->pax->id = i;
+			happy_hour(rules->pax);
+			exit(0);
+		}
+		if (i % 2 == 0)
+			usleep(rules->time_to_eat);
+		i++;
+	}
+}
 
 long long	ft_get_time(t_sophist *philo)
 {
@@ -34,26 +61,7 @@ void	launch(t_man *rules)
 	rules->check = sem_open("sem_check", O_CREAT, 0644, 0);
 	rules->writing = sem_open("writing", O_CREAT, 0644, 1);
 	rules->pax->runtime = ft_get_time(rules->pax);
-	while (i < rules->tot)
-	{
-		rules->pid[i] = fork();
-		if (rules->pid[i] < 0)
-		{
-			ft_puterror("Error: Failed to create the fork.");
-			sem_close(rules->forks);
-			sem_close(rules->check);
-			sem_close(rules->writing);
-		}
-		if (rules->pid[i] == 0)
-		{
-			rules->pax->id = i;
-			happy_hour(rules->pax);
-			exit(0);
-		}
-		if (i % 2 == 0)
-			usleep(rules->time_to_eat);
-		i++;
-	}
+	starting_block_ft(rules);
 	pthread_create(&pt, NULL, wait_pid_end, rules);
 	pthread_detach(pt);
 }
