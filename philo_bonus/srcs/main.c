@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 16:59:01 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:16:25 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	main(int argc, char *argv[])
 {
 	t_man	*rules;
 
-	if (check_args(argc, argv))
+	if (!check_args(argc, argv))
 	{
 		rules = init_all(argv);
 		if (!rules)
