@@ -6,30 +6,49 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 20:31:09 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:13:56 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_args(int argc, char *argv[])
+static int	ft_isnumber(char *nptr)
 {
-	if (argc < 5 || argc > 6)
-	{
-		ft_puterror("Error: The number of arguments is incorrect.");
+	int	i;
+
+	i = 0;
+	if (nptr[i] == '-')
+		i++;
+	if (nptr[i] == ' ' || nptr[i] == '\0')
 		return (0);
-	}
-	if (ft_atoi(argv[1]) <= 0)
+	while (nptr[i])
 	{
-		ft_puterror("Error: There are no philosophers.");
-		return (0);
-	}
-	if (ft_atoi(argv[1]) > 200)
-	{
-		ft_puterror("Error: Program softcapped at 200 philosophers.");
-		return (0);
+		if (!ft_isdigit(nptr[i]))
+			return (0);
+		i++;
 	}
 	return (1);
+}
+
+int	check_args(int argc, char *argv[])
+{
+	size_t	i;
+
+	if (argc < 5 || argc > 6)
+		return (ft_puterror("Error: The number of arguments is incorrect."));
+	if (ft_atoi(argv[1]) <= 0)
+		return (ft_puterror("Error: There are no philosophers."));
+	if (ft_atoi(argv[1]) > 200)
+		return (ft_puterror("Error: Program softcapped at 200 philosophers."));
+	i = 1;
+	while (argv[i++])
+	{
+		if (!ft_strtolol(argv[i]) || !ft_isnumber(argv[i]))
+			return (ft_puterror("Error: At least one of the argument \
+				is not a valid number."));
+		i++;
+	}
+	return (0);
 }
 
 int	check_deaths(t_man *rules)

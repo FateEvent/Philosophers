@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/06/05 21:06:51 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:12:03 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ typedef struct s_man
 	long				num_of_meals;
 }				t_man;
 
-void	ft_puterror(const char *str);
 int		ft_atoi(const char *nptr);
+int		ft_puterror(const char *str);
 
 void	*routine(void *philosophical_void);
 void	happy_hour(t_sophist *philo, t_man *rules);

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 16:55:35 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:15:16 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ typedef struct s_man
 }				t_man;
 
 void		*ft_memset(void *s, int c, size_t n);
-void		ft_puterror(const char *str);
 int			ft_atoi(const char *nptr);
+int			ft_puterror(const char *str);
 
 void		*happy_hour(t_sophist *philo);
 void		eat(t_sophist philo);
