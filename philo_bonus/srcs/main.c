@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 12:26:18 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:57:22 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	launch(t_man *rules)
 		i++;
 	}
 	pthread_create(&pt, NULL, wait_pid_end, rules);
-//	pthread_create(&pt, NULL, check_fate, rules);
 	pthread_detach(pt);
 }
 
@@ -95,7 +94,6 @@ int	main(int argc, char *argv[])
 			return (1);
 		launch(rules);
 		sem_wait(rules->check);
-		printf("chiuso!\n");
 		the_end(rules);
 		return (0);
 	}

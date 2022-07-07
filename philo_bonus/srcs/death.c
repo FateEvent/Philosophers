@@ -6,32 +6,12 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 12:55:28 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:57:42 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-/*
-void	*check_fate(void *rules)
-{
-	t_man	*ptr;
-	int		i;
 
-	i = 0;
-	ptr = rules;
-	while (42)
-	{
-//		printf("1: %d, %d\n", check_deaths(ptr), check_meals(ptr));
-		if (check_deaths(ptr) || check_meals(ptr))
-		{
-			printf("2: %d, %d\n", check_deaths(ptr), check_meals(ptr));
-			sem_post(ptr->check);
-			break ;
-		}
-	}
-	exit(0);
-}
-*/
 void	*wait_pid_end(void *rules)
 {
 	t_man	*ptr;
@@ -61,8 +41,6 @@ void	the_end(t_man *rules)
 	sem_close(rules->forks);
 	sem_close(rules->check);
 	sem_close(rules->writing);
-//	free(rules->pax);
-//	free(rules->pid);
 	exit(0);
 }
 
@@ -73,10 +51,9 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 		if (ft_get_time(philo) - philo->runtime > philo->rules->time_to_die)
 		{
 			sem_wait(philo->rules->writing);
-			printf("pappa 2\n");
 			philo->dead = 1;
-//			take_notes(*philo, "has died");
-			printf("%ld %d %s\n", time_diff(&philo->rules->start, &now), philo->id + 1, "has died");
+			printf("%ld %d %s\n", time_diff(&philo->rules->start, &now),
+				philo->id + 1, "has died");
 			sem_post(philo->rules->check);
 			return (1);
 		}
@@ -97,7 +74,8 @@ int	death_note(t_sophist *philo)
 		{
 			sem_wait(philo->rules->writing);
 			philo->dead = 1;
-			printf("%lld %d %s\n", ft_get_time(philo), philo->id + 1, "has died");
+			printf("%lld %d %s\n", ft_get_time(philo),
+				philo->id + 1, "has died");
 			sem_post(philo->rules->check);
 			return (1);
 		}
