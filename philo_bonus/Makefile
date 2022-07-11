@@ -6,20 +6,29 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/07/07 18:22:34 by faventur         ###   ########.fr        #
+#    Updated: 2022/07/11 12:05:25 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS = main.c libftools.c utils.c ft_check.c life.c death.c time.c happy_hour.c
+SRCS_FILES = main.c libftools.c utils.c ft_check.c life.c death.c time.c happy_hour.c
 
-OBJS = $(addprefix srcs/, ${SRCS:.c=.o})
+SRCS_PATH = srcs/
 
-FLAGS = -Wall -Wextra -Werror -g3
-DANGER = -fsanitize=address
+SRCS +=	$(addprefix $(SRCS_PATH), $(SRCS_FILES))
+
+OBJS_PATH = bin/
+
+OBJS = 	$(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.o))
+
+FLAGS = -Wall -Wextra -Werror
+
+LIBLINKS = -I./includes
+
+LINKS = -lpthread
 
 RM = rm -f
 
-NAME = philo_bonus
+NAME = philo
 
 NONE = \033[0m
 HIGREEN = \033[92m
@@ -31,18 +40,19 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	@echo "$(HIGREEN)No! Try not! Do! Or do not! There is no try.$(NONE)"
 	@echo "$(CURSIVE)Master Yoda$(NONE)"
-	@gcc $(DANGER) $(OBJS) -o $(NAME)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJS) $(LINKS)
 	@echo "$(HIBLUE)Philosopher, c'est apprendre à mourir.$(NONE)"
 	@echo "Montaigne, $(CURSIVE)Les Essais$(NONE)"
 
 .c.o:
-	gcc $(FLAGS) -c -I./includes $< -o ${<:.c=.o}
+	gcc $(FLAGS) $(LIBLINKS) -c $< -o ${<:.c=.o}
 
-exe: all
-	@./$(NAME)
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.c 
+	@mkdir -p $(dir $@)
+	${CC} ${CFLAGS} $(LIBLINKS) -c $< -o $@
 
 clean:
-	@$(RM) $(OBJS)
+	@$(RM) -r $(OBJS_PATH)
 
 fclean: clean
 	@$(RM) $(NAME)
