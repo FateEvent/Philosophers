@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 16:16:51 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:32:14 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct s_man
 	int					tot;
 	int					deaths;
 	struct s_sophist	*pax[200];
-	pthread_mutex_t		forks[200];
+	pthread_mutex_t		*forks;
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
 	pthread_mutex_t		check;

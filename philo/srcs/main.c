@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 16:17:48 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:53:08 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	launch(t_man *rules)
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
+		printf("launch : %d\n", i);
 		i++;
 	}
 }
@@ -31,6 +32,7 @@ static void	ft_update_struct(t_man *rules, char *argv[])
 {
 	rules->tot = ft_atoi(argv[1]);
 	rules->deaths = 0;
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->tot);
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
@@ -57,11 +59,13 @@ t_man	*init_all(char *argv[])
 			return (NULL);
 		rules->pax[i]->id = i;
 		rules->pax[i]->left_fork = i;
+		pthread_mutex_init(&rules->forks[i], NULL);
 		rules->pax[i]->left_fork = (i + 1) % rules->tot;
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
 		i++;
+		printf("%d\n", i);
 	}
 	pthread_mutex_init(&rules->writing, NULL);
 	pthread_mutex_init(&rules->check, NULL);
