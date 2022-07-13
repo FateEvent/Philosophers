@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 17:00:52 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:06:43 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	launch(t_man *rules)
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
-		printf("launch : %d\n", i);
 		i++;
 	}
 }
@@ -65,7 +64,6 @@ t_man	*init_all(char *argv[])
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
 		i++;
-		printf("%d\n", i);
 	}
 	pthread_mutex_init(&rules->writing, NULL);
 	pthread_mutex_init(&rules->check, NULL);
