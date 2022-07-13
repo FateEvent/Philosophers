@@ -6,7 +6,7 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/07/11 12:05:25 by faventur         ###   ########.fr        #
+#    Updated: 2022/07/13 13:34:57 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ LINKS = -lpthread
 
 RM = rm -f
 
-NAME = philo
+NAME = philo_bonus
 
 NONE = \033[0m
 HIGREEN = \033[92m
