@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 15:03:43 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:23:07 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	the_end(t_man *rules)
 			ft_puterror("Error: The thread got lost.");
 			return ;
 		}
-		pthread_mutex_destroy(&rules->pax[i]->left_fork);
+		pthread_mutex_destroy(rules->forks);
 		free(rules->pax[i]);
 		rules->pax[i] = NULL;
 		i++;
