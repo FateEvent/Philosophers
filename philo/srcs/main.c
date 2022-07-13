@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 19:12:56 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 20:05:42 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,26 @@ t_man	*init_all(char *argv[])
 
 int	main(int argc, char *argv[])
 {
-	t_man		*rules;
+	t_man	*rules;
+	int		i;
 
 	if (!check_args(argc, argv))
 	{
+		i = 0;
 		rules = init_all(argv);
 		if (!rules)
 			return (1);
 		launch(rules);
-//		while (!rules->deaths)
-//			if (check_deaths(rules) || check_meals(rules))
-//				break ;
+/*
+		while (!rules->deaths && i < rules->tot)
+		{
+			if (check_deaths(rules->pax[i]) || check_meals(rules->pax[i]))
+				break ;
+			if (i == rules->tot - 1)
+				i = 0;
+			i++;
+		}
+*/
 		pthread_mutex_lock(&rules->check);
 		the_end(rules);
 		return (0);
