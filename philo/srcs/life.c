@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 14:10:58 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 15:27:51 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,16 @@ void	eat(t_sophist philo)
 	t_man	rules;
 
 	rules = *philo.rules;
-	pthread_mutex_lock(&rules.forks[philo.left_fork]);
-	pthread_mutex_lock(&rules.forks[philo.right_fork]);
-	printf("philo %d left fork %d & right fork %d\n", philo.id, philo.left_fork, philo.right_fork);
+	pthread_mutex_lock(&philo.left_fork);
+	pthread_mutex_lock(philo.right_fork);
 	take_notes(philo, "has taken a fork");
 	take_notes(philo, "has taken a fork");
 	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, "is eating");
 	gettimeofday(&philo.acting, NULL);
 	countdown(philo, rules.time_to_eat);
-	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
-	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
+	pthread_mutex_unlock(&philo.left_fork);
+	pthread_mutex_unlock(philo.right_fork);
 	pthread_mutex_unlock(&rules.meal);
 }
 

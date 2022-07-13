@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/07 18:12:03 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 14:47:26 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 
 typedef struct s_sophist
 {
-	int				id;
-	int				right_fork;
-	int				left_fork;
-	int				dead;
-	long			meals_num;
-	struct timeval	acting;
-	struct timeval	last_meal;
-	pthread_t		pt;
-	struct s_man	*rules;
+	int					id;
+	pthread_mutex_t		*right_fork;
+	pthread_mutex_t		left_fork;
+	int					dead;
+	long				meals_num;
+	struct timeval		acting;
+	struct timeval		last_meal;
+	pthread_t			pt;
+	struct s_man		*rules;
 }				t_sophist;
 
 typedef struct s_man
@@ -37,7 +37,7 @@ typedef struct s_man
 	int					tot;
 	int					deaths;
 	struct s_sophist	*pax[200];
-	pthread_mutex_t		forks[200];
+//	pthread_mutex_t		forks[200];
 	pthread_mutex_t		meal;
 	pthread_mutex_t		writing;
 	pthread_mutex_t		check;

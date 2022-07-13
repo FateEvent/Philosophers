@@ -6,11 +6,26 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 14:16:39 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 16:04:48 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	ft_fork_manager(t_man *rules)
+{
+	int	i;
+
+	i = rules->tot;
+	while (i > 0)
+	{
+		rules->pax[i]->right_fork = &rules->pax[i - 1]->left_fork;
+		pthread_mutex_init(rules->pax[i - 1]->right_fork, NULL);
+		i--;
+	}
+	rules->pax[0]->right_fork = &rules->pax[rules->tot - 1]->left_fork;
+	pthread_mutex_init(rules->pax[0]->right_fork, NULL);
+}
 
 void	launch(t_man *rules)
 {
@@ -56,14 +71,13 @@ t_man	*init_all(char *argv[])
 		if (!rules->pax[i])
 			return (NULL);
 		rules->pax[i]->id = i;
-		rules->pax[i]->left_fork = i;
-		rules->pax[i]->right_fork = (i + 1) % rules->tot;
+		pthread_mutex_init(&rules->pax[i]->left_fork, NULL);
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
-		pthread_mutex_init(&rules->forks[i], NULL);
 		i++;
 	}
+	ft_fork_manager(rules);
 	pthread_mutex_init(&rules->writing, NULL);
 	pthread_mutex_init(&rules->check, NULL);
 	return (rules);
