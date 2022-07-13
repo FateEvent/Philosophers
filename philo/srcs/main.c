@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 16:53:08 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 17:00:52 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_man	*init_all(char *argv[])
 		rules->pax[i]->id = i;
 		rules->pax[i]->left_fork = i;
 		pthread_mutex_init(&rules->forks[i], NULL);
-		rules->pax[i]->left_fork = (i + 1) % rules->tot;
+		rules->pax[i]->right_fork = (i + 1) % rules->tot;
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
