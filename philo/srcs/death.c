@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 16:52:10 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:11:30 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	death_note(t_sophist *philo)
 	int				ret;
 
 	ret = 0;
-	pthread_mutex_lock(&philo->rules->check);
 	gettimeofday(&now, NULL);
 	if (philo->meals_num > 0)
 	{
@@ -72,6 +71,5 @@ int	death_note(t_sophist *philo)
 	}
 	else if (philo->meals_num == 0)
 		ret = death_note_pt2(now, philo);
-	pthread_mutex_unlock(&philo->rules->check);
 	return (ret);
 }

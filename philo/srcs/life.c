@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 16:21:24 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/13 19:32:54 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,18 +62,18 @@ void	*routine(void *philosophical_void)
 	philo = (t_sophist *)philosophical_void;
 	rules = philo->rules;
 	happy_hour(philo, rules);
-	while (!check_program_end(philo))
+	while (!check_deaths(philo) && !check_meals(philo))
 	{
 		gettimeofday(&philo->last_meal, NULL);
 		eat(*philo);
-		if (rules->deaths)
+		if (death_note(philo))
 			break ;
 		philo->meals_num++;
 		think(*philo);
-		if (rules->deaths)
+		if (death_note(philo))
 			break ;
 		ft_sleep(*philo);
-		if (rules->deaths)
+		if (death_note(philo))
 			break ;
 	}
 	return (NULL);
