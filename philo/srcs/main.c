@@ -6,11 +6,32 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 20:05:42 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/15 12:42:44 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*the_policeman_thread(void *philosophical_void)
+{
+	t_man		*rules;
+	int			i;
+
+	rules = philosophical_void;
+	i = 0;
+	while (!rules->deaths)
+	{
+		if (check_deaths(rules->pax[i]))
+			break ;
+		if (check_meals(rules->pax[i]))
+			break ;
+		if (i == rules->tot - 1)
+			i = 0;
+		i++;
+	}
+	pthread_mutex_unlock(&rules->check);
+	return (NULL);
+}
 
 void	launch(t_man *rules)
 {
@@ -23,15 +44,23 @@ void	launch(t_man *rules)
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
+/*
+		pthread_detach(rules->pax[i]->pt);
+		if (i % 2 == 0)
+			usleep(500);
+*/
 		i++;
 	}
+	if (pthread_create(&rules->policeman, NULL,
+			&the_policeman_thread, rules) != 0)
+		ft_puterror("Error: Failed to create the thread.");
+//	pthread_detach(rules->policeman);
 }
 
 static void	ft_update_struct(t_man *rules, char *argv[])
 {
 	rules->tot = ft_atoi(argv[1]);
 	rules->deaths = 0;
-	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->tot);
 	rules->time_to_die = ft_atoi(argv[2]);
 	rules->time_to_eat = ft_atoi(argv[3]);
 	rules->time_to_sleep = ft_atoi(argv[4]);
@@ -39,6 +68,23 @@ static void	ft_update_struct(t_man *rules, char *argv[])
 		rules->num_of_meals = ft_atoi(argv[5]);
 	else
 		rules->num_of_meals = -1;
+}
+
+static void	mutex_initializer(t_man *rules)
+{
+	int	i;
+
+	i = 0;
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->tot);
+	if (!rules->forks)
+		return ;
+	while (i < rules->tot)
+	{
+		pthread_mutex_init(&rules->forks[i], NULL);
+		i++;
+	}
+	pthread_mutex_init(&rules->writing, NULL);
+	pthread_mutex_init(&rules->check, NULL);
 }
 
 t_man	*init_all(char *argv[])
@@ -58,15 +104,15 @@ t_man	*init_all(char *argv[])
 			return (NULL);
 		rules->pax[i]->id = i;
 		rules->pax[i]->left_fork = i;
-		pthread_mutex_init(&rules->forks[i], NULL);
 		rules->pax[i]->right_fork = (i + 1) % rules->tot;
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
 		i++;
 	}
-	pthread_mutex_init(&rules->writing, NULL);
-	pthread_mutex_init(&rules->check, NULL);
+	mutex_initializer(rules);
+	if (!rules->forks)
+		return (NULL);
 	return (rules);
 }
 
@@ -83,17 +129,19 @@ int	main(int argc, char *argv[])
 			return (1);
 		launch(rules);
 /*
-		while (!rules->deaths && i < rules->tot)
+		while (!rules->deaths)
 		{
-			if (check_deaths(rules->pax[i]) || check_meals(rules->pax[i]))
-				break ;
 			if (i == rules->tot - 1)
 				i = 0;
 			i++;
 		}
+		if (rules->deaths)
+			pthread_mutex_unlock(&rules->check);
 */
 		pthread_mutex_lock(&rules->check);
+//		pthread_mutex_unlock(&rules->check);
 		the_end(rules);
 		return (0);
 	}
+	return (1);
 }

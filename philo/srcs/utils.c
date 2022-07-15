@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 16:47:54 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 20:10:11 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/15 11:35:10 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	check_deaths(t_sophist *philo)
 {
 	if (philo->dead > 0)
 	{
+		philo->rules->deaths++;
 		pthread_mutex_unlock(&philo->rules->check);
 		return (1);
 	}
@@ -68,11 +69,10 @@ int	check_meals(t_sophist *philo)
 	if (philo->rules->num_of_meals < 0)
 		return (0);
 	cmp = philo->rules->num_of_meals;
-	if (philo->meals_num < cmp)
+	if (philo->meals_num <= cmp)
 		return (0);
 	else
 		philo->rules->deaths = 1;
 	pthread_mutex_unlock(&philo->rules->check);
 	return (1);
 }
-

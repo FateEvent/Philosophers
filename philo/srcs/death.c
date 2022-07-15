@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 20:14:09 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/15 11:59:08 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ void	the_end(t_man *rules)
 	int	i;
 
 	i = 0;
+	printf("Miao\n");
+
+	if (pthread_join(rules->policeman, (void *)&rules) != 0)
+	{
+		ft_puterror("Error: The thread got lost.");
+		return ;
+	}
+	printf("Miao\n");
+
 	while (i < rules->tot)
 	{
 		if (pthread_join(rules->pax[i]->pt, (void *)&rules->pax[i]) != 0)
