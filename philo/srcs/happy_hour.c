@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:12:27 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:55:52 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:53:05 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	solitude(t_sophist *philo)
 	gettimeofday(&now, NULL);
 	printf("%lld %d %s\n", time_diff(&rules->start, &now)
 		+ philo->rules->time_to_die, philo->id + 1, "died");
+	usleep(500);
 }
 
 void	happy_hour(t_sophist *philo, t_man *rules)
