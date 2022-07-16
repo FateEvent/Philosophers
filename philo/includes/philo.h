@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 14:51:55 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:33:01 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	the_end(t_man *rules);
 t_man	*init_all(char *argv[]);
 void	launch(t_man *ph);
 
-void	timecount(t_sophist *philo, long duration);
 void	countdown(t_sophist *philo, long duration);
 long	time_diff(struct timeval *start, struct timeval *end);
 long	length_diff(long present, long past);

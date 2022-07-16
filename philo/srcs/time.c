@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:13:33 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:33:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 ** The get_the_time() functions transforms the values expressed as
 ** a timeval variable into a long int.
 ** 
-** Both timecount() and countdown() functions create a duration in
-** time. The timecount() function checks if the philosopher dies,
+** Both countdown() and countdown() functions create a duration in
+** time. The countdown() function checks if the philosopher dies,
 ** while the countdown() function doesn't.
 */
 
@@ -65,7 +65,7 @@ long	get_the_time(void)
 	return (sec * 1000 + usec / 1000);
 }
 
-void	timecount(t_sophist *philo, long duration)
+void	countdown(t_sophist *philo, long duration)
 {
 	long	sec;
 	long	usec;

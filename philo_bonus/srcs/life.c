@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 10:25:06 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:33:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_sleep(t_sophist philo)
 {
 	take_notes(philo, "is sleeping");
 	gettimeofday(&philo.acting, NULL);
-	timecount(philo, philo.rules->time_to_sleep);
+	countdown(philo, philo.rules->time_to_sleep);
 }
 
 void	think(t_sophist philo)
