@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 12:14:37 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:46:03 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_man	*init_all(char *argv[])
 			return (NULL);
 		rules->pax[i]->id = i;
 		rules->pax[i]->left_fork = i;
-		rules->pax[i]->right_fork = (i - 1) % rules->tot;
+		rules->pax[i]->right_fork = (i + 1) % rules->tot;
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
@@ -100,19 +100,7 @@ int	main(int argc, char *argv[])
 		launch(rules);
 		i = 0;
 		if (rules->tot > 1)
-		{
-			while (!rules->deaths)
-			{
-				if (check_deaths(rules->pax[i]))
-					break ;
-				if (check_meals(rules->pax[i]))
-					break ;
-				if (i == rules->tot - 1)
-					i = 0;
-				i++;
-			}
-			pthread_mutex_unlock(&rules->check);
-		}
+			check_end(rules);
 		pthread_mutex_lock(&rules->check);
 		the_end(rules);
 		return (0);

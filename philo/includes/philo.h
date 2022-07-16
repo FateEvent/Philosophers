@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 12:14:01 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:51:55 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,27 @@ int		ft_puterror(const char *str);
 
 void	*routine(void *philosophical_void);
 void	happy_hour(t_sophist *philo, t_man *rules);
-void	eat(t_sophist philo);
-void	think(t_sophist philo);
-void	ft_sleep(t_sophist philo);
-void	take_notes(t_sophist philo, char *msg);
+void	eat(t_sophist *philo);
+void	think(t_sophist *philo);
+void	ft_sleep(t_sophist *philo);
+void	take_notes(t_sophist *philo, char *msg);
 void	solitude(t_sophist *philo);
 void	the_end(t_man *rules);
 
 t_man	*init_all(char *argv[]);
 void	launch(t_man *ph);
 
-void	timecount(t_sophist philo, long duration);
-void	countdown(t_sophist philo, long duration);
+void	timecount(t_sophist *philo, long duration);
+void	countdown(t_sophist *philo, long duration);
 long	time_diff(struct timeval *start, struct timeval *end);
 long	length_diff(long present, long past);
 long	get_the_time(void);
-int		time_goes_by(struct timeval *time, long standard);
+long	from_tv_to_long(struct timeval *time);
 
-//int		check_meals(t_man *rules);
 int		check_meals(t_sophist *philo);
-//int		check_deaths(t_man *rules);
 int		check_deaths(t_sophist *philo);
 int		death_note(t_sophist *philo);
 int		check_args(int argc, char *argv[]);
+void	check_end(t_man *rules);
 
 #endif

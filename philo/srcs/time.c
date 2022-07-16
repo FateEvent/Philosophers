@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/13 17:59:55 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 15:08:56 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@
 */
 
 #include "philo.h"
+
+long	from_tv_to_long(struct timeval *time)
+{
+	long	sec;
+	long	usec;
+
+	sec = time->tv_sec;
+	usec = time->tv_usec;
+	return (sec * 1000 + usec / 1000);
+}
 
 long	time_diff(struct timeval *start, struct timeval *end)
 {
@@ -55,27 +65,27 @@ long	get_the_time(void)
 	return (sec * 1000 + usec / 1000);
 }
 
-void	timecount(t_sophist philo, long duration)
+void	timecount(t_sophist *philo, long duration)
 {
 	long	sec;
 	long	usec;
 	long	time;
 
-	sec = philo.acting.tv_sec;
-	usec = philo.acting.tv_usec;
+	sec = philo->acting.tv_sec;
+	usec = philo->acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
-	while (length_diff(get_the_time(), time) <= duration && !death_note(&philo))
+	while (length_diff(get_the_time(), time) <= duration && !death_note(philo))
 		usleep(50);
 }
 
-void	countdown(t_sophist philo, long duration)
+void	countdown(t_sophist *philo, long duration)
 {
 	long	sec;
 	long	usec;
 	long	time;
 
-	sec = philo.acting.tv_sec;
-	usec = philo.acting.tv_usec;
+	sec = philo->acting.tv_sec;
+	usec = philo->acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
 	while (length_diff(get_the_time(), time) <= duration)
 		usleep(50);
