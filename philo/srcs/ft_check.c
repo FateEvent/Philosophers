@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 18:19:05 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 12:18:03 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:18:36 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,16 @@ int	check_args(int argc, char *argv[])
 
 void	check_end(t_man *rules)
 {
-	int	i;
+	struct timeval	now;
+	int				i;
 
+	gettimeofday(&now, NULL);
 	i = 0;
 	while (!rules->deaths)
 	{
+		if (time_diff(&rules->pax[i]->last_meal, &now)
+			> rules->time_to_die)
+			break ;
 		if (check_deaths(rules->pax[i]))
 			break ;
 		if (check_meals(rules->pax[i]))

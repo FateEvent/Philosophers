@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 14:46:03 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:29:55 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	launch(t_man *rules)
 	gettimeofday(&rules->start, NULL);
 	while (i < rules->tot)
 	{
+		rules->pax[i]->last_meal = rules->start;
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");

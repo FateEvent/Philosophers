@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 15:09:28 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:29:12 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,20 @@ void	eat(t_sophist *philo)
 	t_man	*rules;
 
 	rules = philo->rules;
+	if (death_note(philo))
+		return ;
 	pthread_mutex_lock(&rules->forks[philo->left_fork]);
+	if (death_note(philo))
+		return ;
+	take_notes(philo, "has taken a fork");
 	pthread_mutex_lock(&rules->forks[philo->right_fork]);
+	if (death_note(philo))
+		return ;
+	take_notes(philo, "has taken a fork");
 	gettimeofday(&philo->last_meal, NULL);
 	philo->meals_num++;
-	take_notes(philo, "ready to eat");
-	gettimeofday(&philo->acting, NULL);
-	take_notes(philo, "has taken a fork");
-	take_notes(philo, "has taken a fork");
 	take_notes(philo, "is eating");
+	gettimeofday(&philo->acting, NULL);
 	timecount(philo, rules->time_to_eat);
 	pthread_mutex_unlock(&rules->forks[philo->left_fork]);
 	pthread_mutex_unlock(&rules->forks[philo->right_fork]);
@@ -65,6 +70,8 @@ void	*routine(void *philosophical_void)
 	happy_hour(philo, rules);
 	while (!rules->deaths && !check_deaths(philo) && !check_meals(philo))
 	{
+		if (death_note(philo))
+			break ;
 		eat(philo);
 		if (death_note(philo))
 			break ;
