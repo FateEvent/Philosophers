@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:33:21 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 16:35:09 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 ** The get_the_time() functions transforms the values expressed as
 ** a timeval variable into a long int.
 ** 
-** Both countdown() and countdown() functions create a duration in
-** time. The countdown() function checks if the philosopher dies,
-** while the countdown() function doesn't.
+** The countdown() function creates a duration in time. It also
+** checks if the philosopher dies, by calling the death_note
+** function.
 */
 
 #include "philo.h"
