@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 15:15:33 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 10:25:06 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	eat(t_sophist philo)
 	t_man	rules;
 
 	sem_wait(rules.forks);
-//	sem_wait(rules.forks);
+	sem_wait(rules.forks);
 	rules = *philo.rules;
 	take_notes(philo, "has taken a fork");
 	take_notes(philo, "has taken a fork");

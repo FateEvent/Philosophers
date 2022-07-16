@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 11:56:02 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:11:11 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,11 @@ void	eat(t_sophist philo)
 	pthread_mutex_lock(&rules.forks[philo.right_fork]);
 	take_notes(philo, "has taken a fork");
 	take_notes(philo, "has taken a fork");
-	pthread_mutex_lock(&rules.meal);
 	take_notes(philo, "is eating");
 	gettimeofday(&philo.acting, NULL);
 	countdown(philo, rules.time_to_eat);
 	pthread_mutex_unlock(&rules.forks[philo.left_fork]);
 	pthread_mutex_unlock(&rules.forks[philo.right_fork]);
-	pthread_mutex_unlock(&rules.meal);
 }
 
 void	*routine(void *philosophical_void)

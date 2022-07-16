@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 11:59:08 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:06:12 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,9 @@ void	the_end(t_man *rules)
 	int	i;
 
 	i = 0;
-	printf("Miao\n");
-
-	if (pthread_join(rules->policeman, (void *)&rules) != 0)
-	{
-		ft_puterror("Error: The thread got lost.");
-		return ;
-	}
-	printf("Miao\n");
-
 	while (i < rules->tot)
 	{
-		if (pthread_join(rules->pax[i]->pt, (void *)&rules->pax[i]) != 0)
-		{
-			ft_puterror("Error: The thread got lost.");
-			return ;
-		}
+		pthread_detach(rules->pax[i]->pt);
 		pthread_mutex_destroy(&rules->forks[i]);
 		free(rules->pax[i]);
 		rules->pax[i] = NULL;
@@ -53,7 +40,7 @@ static int	death_note_pt2(struct timeval now, t_sophist *philo)
 		{
 			philo->dead = 1;
 			philo->rules->deaths = 1;
-			take_notes(*philo, "has died");
+			take_notes(*philo, "died");
 			pthread_mutex_unlock(&philo->rules->check);
 			return (1);
 		}
@@ -74,7 +61,7 @@ int	death_note(t_sophist *philo)
 		{
 			philo->dead = 1;
 			philo->rules->deaths = 1;
-			take_notes(*philo, "has died");
+			take_notes(*philo, "died");
 			pthread_mutex_unlock(&philo->rules->check);
 			return (1);
 		}

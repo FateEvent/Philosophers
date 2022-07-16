@@ -6,32 +6,11 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 12:42:44 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 12:14:37 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	*the_policeman_thread(void *philosophical_void)
-{
-	t_man		*rules;
-	int			i;
-
-	rules = philosophical_void;
-	i = 0;
-	while (!rules->deaths)
-	{
-		if (check_deaths(rules->pax[i]))
-			break ;
-		if (check_meals(rules->pax[i]))
-			break ;
-		if (i == rules->tot - 1)
-			i = 0;
-		i++;
-	}
-	pthread_mutex_unlock(&rules->check);
-	return (NULL);
-}
 
 void	launch(t_man *rules)
 {
@@ -44,17 +23,8 @@ void	launch(t_man *rules)
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
-/*
-		pthread_detach(rules->pax[i]->pt);
-		if (i % 2 == 0)
-			usleep(500);
-*/
 		i++;
 	}
-	if (pthread_create(&rules->policeman, NULL,
-			&the_policeman_thread, rules) != 0)
-		ft_puterror("Error: Failed to create the thread.");
-//	pthread_detach(rules->policeman);
 }
 
 static void	ft_update_struct(t_man *rules, char *argv[])
@@ -104,7 +74,7 @@ t_man	*init_all(char *argv[])
 			return (NULL);
 		rules->pax[i]->id = i;
 		rules->pax[i]->left_fork = i;
-		rules->pax[i]->right_fork = (i + 1) % rules->tot;
+		rules->pax[i]->right_fork = (i - 1) % rules->tot;
 		rules->pax[i]->meals_num = 0;
 		rules->pax[i]->dead = 0;
 		rules->pax[i]->rules = rules;
@@ -128,18 +98,22 @@ int	main(int argc, char *argv[])
 		if (!rules)
 			return (1);
 		launch(rules);
-/*
-		while (!rules->deaths)
+		i = 0;
+		if (rules->tot > 1)
 		{
-			if (i == rules->tot - 1)
-				i = 0;
-			i++;
-		}
-		if (rules->deaths)
+			while (!rules->deaths)
+			{
+				if (check_deaths(rules->pax[i]))
+					break ;
+				if (check_meals(rules->pax[i]))
+					break ;
+				if (i == rules->tot - 1)
+					i = 0;
+				i++;
+			}
 			pthread_mutex_unlock(&rules->check);
-*/
+		}
 		pthread_mutex_lock(&rules->check);
-//		pthread_mutex_unlock(&rules->check);
 		the_end(rules);
 		return (0);
 	}

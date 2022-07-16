@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 15:07:41 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 10:26:06 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	launch(t_man *rules)
 	sem_unlink("fourchette");
 	sem_unlink("sem_check");
 	sem_unlink("writing");
-	rules->forks = sem_open("fourchette", O_CREAT, 0644, rules->tot / 2);
+	rules->forks = sem_open("fourchette", O_CREAT, 0644, rules->tot);
 	rules->check = sem_open("sem_check", O_CREAT, 0644, 0);
 	rules->writing = sem_open("writing", O_CREAT, 0644, 1);
 	rules->pax->runtime = ft_get_time(rules->pax);

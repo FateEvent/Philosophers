@@ -6,11 +6,11 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 15:31:50 by albaur            #+#    #+#             */
-/*   Updated: 2022/07/15 15:34:35 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/16 09:51:19 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
+#include "philo.h"
 
 void	philosopher_routine(t_philo *philo, int id)
 {
