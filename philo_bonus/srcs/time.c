@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:30:03 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:49:51 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,6 @@
 */
 
 #include "philo_bonus.h"
-
-long	time_diff(struct timeval *start, struct timeval *end)
-{
-	long	sec;
-	long	usec;
-
-	sec = end->tv_sec - start->tv_sec;
-	usec = end->tv_usec - start->tv_usec;
-	return (sec * 1000 + usec / 1000);
-}
 
 long	length_diff(long present, long past)
 {
@@ -64,6 +54,12 @@ void	countdown(t_sophist *philo, long duration)
 	sec = philo->acting.tv_sec;
 	usec = philo->acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
-	while (length_diff(get_the_time(), time) < duration && !death_note(philo))
+	while (length_diff(get_the_time(), time) <= duration)
+	{
+		if (death_note(philo))
+			return ;
 		usleep(50);
+		if (death_note(philo))
+			return ;
+	}
 }

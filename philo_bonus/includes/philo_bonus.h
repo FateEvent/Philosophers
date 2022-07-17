@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:36:18 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 14:03:58 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void		*ft_memset(void *s, int c, size_t n);
 int			ft_atoi(const char *nptr);
 int			ft_puterror(const char *str);
 
+void		philosopher_manage(t_sophist *philo);
 void		*happy_hour(t_sophist *philo);
 void		eat(t_sophist *philo);
 void		think(t_sophist *philo);

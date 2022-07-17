@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:46:21 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 14:04:53 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	starting_block_ft(t_man *rules)
 		if (rules->pid[i] == 0)
 		{
 			rules->pax->id = i;
-			happy_hour(rules->pax);
+//			happy_hour(rules->pax);
+			philosopher_manage(rules->pax);
 			exit(0);
 		}
 		if (i % 2 == 0)

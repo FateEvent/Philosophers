@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:29:30 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 13:54:02 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,22 @@ void	take_notes(t_sophist *philo, char *msg)
 
 void	ft_sleep(t_sophist *philo)
 {
+	if (death_note(philo))
+		return ;
 	take_notes(philo, "is sleeping");
 	gettimeofday(&philo->acting, NULL);
 	countdown(philo, philo->rules->time_to_sleep);
+	if (death_note(philo))
+		return ;
 }
 
 void	think(t_sophist *philo)
 {
+	if (death_note(philo))
+		return ;
 	take_notes(philo, "is thinking");
+	if (death_note(philo))
+		return ;
 }
 
 void	eat(t_sophist *philo)
@@ -39,8 +47,12 @@ void	eat(t_sophist *philo)
 	t_man	rules;
 
 	rules = *philo->rules;
+	if (death_note(philo))
+		return ;
 	sem_wait(rules.forks);
 	take_notes(philo, "has taken a fork");
+	if (death_note(philo))
+		return ;
 	sem_wait(rules.forks);
 	take_notes(philo, "has taken a fork");
 	philo->last_meal = ft_get_time(philo);
