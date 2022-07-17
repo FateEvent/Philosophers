@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 10:26:06 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:46:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	launch(t_man *rules)
 	rules->check = sem_open("sem_check", O_CREAT, 0644, 0);
 	rules->writing = sem_open("writing", O_CREAT, 0644, 1);
 	rules->pax->runtime = ft_get_time(rules->pax);
+	rules->pax->last_meal = rules->pax->runtime;
 	starting_block_ft(rules);
 	pthread_create(&pt, NULL, wait_pid_end, rules);
 	pthread_detach(pt);
@@ -95,6 +96,7 @@ int	main(int argc, char *argv[])
 {
 	t_man	*rules;
 
+	// check min
 	if (!check_args(argc, argv))
 	{
 		rules = init_all(argv);

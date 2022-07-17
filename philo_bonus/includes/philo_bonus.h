@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 10:22:41 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:36:18 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_man
 	sem_t				*check;
 	sem_t				*writing;
 	pid_t				pid[200];
-	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;
@@ -55,10 +54,10 @@ int			ft_atoi(const char *nptr);
 int			ft_puterror(const char *str);
 
 void		*happy_hour(t_sophist *philo);
-void		eat(t_sophist philo);
-void		think(t_sophist philo);
-void		ft_sleep(t_sophist philo);
-void		take_notes(t_sophist philo, char *msg);
+void		eat(t_sophist *philo);
+void		think(t_sophist *philo);
+void		ft_sleep(t_sophist *philo);
+void		take_notes(t_sophist *philo, char *msg);
 void		solitude(t_sophist *philo);
 void		the_end(t_man *rules);
 
@@ -68,7 +67,7 @@ void		*check_fate(void *rules);
 t_man		*init_all(char *argv[]);
 void		launch(t_man *ph);
 
-void		countdown(t_sophist philo, long duration);
+void		countdown(t_sophist *philo, long duration);
 long		time_diff(struct timeval *start, struct timeval *end);
 long		length_diff(long present, long past);
 long		get_the_time(void);
