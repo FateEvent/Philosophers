@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 17:58:40 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:44:57 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	mutex_initializer(t_man *rules)
 		i++;
 	}
 	pthread_mutex_init(&rules->writing, NULL);
-	pthread_mutex_init(&rules->check, NULL);
 }
 
 t_man	*init_all(char *argv[])
@@ -100,9 +99,7 @@ int	main(int argc, char *argv[])
 			return (1);
 		launch(rules);
 		i = 0;
-		if (rules->tot > 1)
-			check_end(rules);
-		pthread_mutex_lock(&rules->check);
+		check_end(rules);
 		the_end(rules);
 		return (0);
 	}

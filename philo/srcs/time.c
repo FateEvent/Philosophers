@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:35:09 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:08:54 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ long	from_tv_to_long(struct timeval *time)
 
 long	time_diff(struct timeval *start, struct timeval *end)
 {
-	long	sec;
-	long	usec;
+	long double	sec;
+	long double	usec;
 
 	sec = end->tv_sec - start->tv_sec;
 	usec = end->tv_usec - start->tv_usec;
@@ -74,6 +74,6 @@ void	countdown(t_sophist *philo, long duration)
 	sec = philo->acting.tv_sec;
 	usec = philo->acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
-	while (length_diff(get_the_time(), time) <= duration && !death_note(philo))
+	while (length_diff(get_the_time(), time) <= duration && !philo->rules->deaths)
 		usleep(50);
 }

@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:17:24 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:43:37 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@ void	the_end(t_man *rules)
 	i = 0;
 	while (i < rules->tot)
 	{
-		pthread_detach(rules->pax[i]->pt);
+		pthread_join(rules->pax[i]->pt, NULL);
 		pthread_mutex_destroy(&rules->forks[i]);
 		free(rules->pax[i]);
 		rules->pax[i] = NULL;
 		i++;
 	}
-	pthread_mutex_destroy(&rules->check);
 	free(rules->forks);
 	rules->forks = NULL;
 	free(rules);
@@ -42,7 +41,6 @@ int	death_note(t_sophist *philo)
 		philo->dead = 1;
 		philo->rules->deaths = 1;
 		take_notes(philo, "died");
-		pthread_mutex_unlock(&philo->rules->check);
 		return (1);
 	}
 	return (0);

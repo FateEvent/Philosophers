@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 18:19:05 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:18:36 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:17:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,21 +91,20 @@ void	check_end(t_man *rules)
 {
 	struct timeval	now;
 	int				i;
-
-	gettimeofday(&now, NULL);
+	
 	i = 0;
 	while (!rules->deaths)
 	{
+		gettimeofday(&now, NULL);
 		if (time_diff(&rules->pax[i]->last_meal, &now)
 			> rules->time_to_die)
-			break ;
-		if (check_deaths(rules->pax[i]))
-			break ;
-		if (check_meals(rules->pax[i]))
-			break ;
+				death_note(rules->pax[i]);
+		// if (heck_deaths(rules->pax[i]))
+		// 	break ;
+		// if (check_meals(rules->pax[i]))
+		// 	break ;
 		if (i == rules->tot - 1)
-			i = 0;
+			i = -1;
 		i++;
 	}
-	pthread_mutex_unlock(&rules->check);
 }

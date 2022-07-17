@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:33:01 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 11:44:36 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_man
 	struct s_sophist	*pax[200];
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		writing;
-	pthread_mutex_t		check;
 	struct timeval		start;
 	long long			time_to_die;
 	long long			time_to_eat;

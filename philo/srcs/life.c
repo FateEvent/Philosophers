@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 17:43:31 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/16 16:33:21 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/17 12:18:19 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	take_notes(t_sophist *philo, char *msg)
 
 void	ft_sleep(t_sophist *philo)
 {
+	if (philo->rules->deaths)
+		return ;
 	take_notes(philo, "is sleeping");
 	gettimeofday(&philo->acting, NULL);
 	countdown(philo, philo->rules->time_to_sleep);
@@ -33,6 +35,8 @@ void	ft_sleep(t_sophist *philo)
 
 void	think(t_sophist *philo)
 {
+	if (philo->rules->deaths)
+		return ;
 	take_notes(philo, "is thinking");
 }
 
@@ -41,14 +45,14 @@ void	eat(t_sophist *philo)
 	t_man	*rules;
 
 	rules = philo->rules;
-	if (death_note(philo))
+	if (philo->rules->deaths)
 		return ;
 	pthread_mutex_lock(&rules->forks[philo->left_fork]);
-	if (death_note(philo))
+	if (philo->rules->deaths)
 		return ;
 	take_notes(philo, "has taken a fork");
 	pthread_mutex_lock(&rules->forks[philo->right_fork]);
-	if (death_note(philo))
+	if (philo->rules->deaths)
 		return ;
 	take_notes(philo, "has taken a fork");
 	gettimeofday(&philo->last_meal, NULL);
@@ -68,19 +72,13 @@ void	*routine(void *philosophical_void)
 	philo = (t_sophist *)philosophical_void;
 	rules = philo->rules;
 	happy_hour(philo, rules);
-	while (!rules->deaths && !check_deaths(philo) && !check_meals(philo))
+	if (rules->tot == 1)
+		return (NULL);
+	while (!rules->deaths && !check_meals(philo))
 	{
-		if (death_note(philo))
-			break ;
 		eat(philo);
-		if (death_note(philo))
-			break ;
 		think(philo);
-		if (death_note(philo))
-			break ;
 		ft_sleep(philo);
-		if (death_note(philo))
-			break ;
 	}
 	return (NULL);
 }
