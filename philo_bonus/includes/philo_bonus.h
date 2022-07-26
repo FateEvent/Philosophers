@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 14:03:58 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:06:13 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_man
 	sem_t				*check;
 	sem_t				*writing;
 	pid_t				pid[200];
+	pthread_t			pt;
 	long long			time_to_die;
 	long long			time_to_eat;
 	long long			time_to_sleep;

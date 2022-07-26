@@ -6,11 +6,24 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 14:04:53 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/26 16:25:00 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	*the_policeman(void *rules)
+{
+	t_man	*ptr;
+
+	ptr = rules;
+	while (42)
+	{
+		if (check_meals(ptr) || death_note(ptr->pax))
+			sem_post(ptr->check);
+	}
+	return (NULL);
+}
 
 void	starting_block_ft(t_man *rules)
 {
@@ -30,7 +43,7 @@ void	starting_block_ft(t_man *rules)
 		if (rules->pid[i] == 0)
 		{
 			rules->pax->id = i;
-//			happy_hour(rules->pax);
+			pthread_create(&rules->pt, NULL, the_policeman, rules);
 			philosopher_manage(rules->pax);
 			exit(0);
 		}
