@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/26 16:25:00 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/26 19:04:38 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*the_policeman(void *rules)
 	ptr = rules;
 	while (42)
 	{
-		if (check_meals(ptr) || death_note(ptr->pax))
+		if (death_note(ptr->pax))
 			sem_post(ptr->check);
 	}
 	return (NULL);
@@ -118,6 +118,7 @@ int	main(int argc, char *argv[])
 			return (1);
 		launch(rules);
 		sem_wait(rules->check);
+		printf("ciao\n");
 		the_end(rules);
 		return (0);
 	}

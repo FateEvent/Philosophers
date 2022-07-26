@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 13:44:18 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/26 18:33:53 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	the_end(t_man *rules)
 		kill(rules->pid[i], SIGINT);
 		i++;
 	}
+	pthread_join(rules->pt, NULL);
 	waitpid(-1, NULL, 0);
 	sem_close(rules->forks);
 	sem_close(rules->check);

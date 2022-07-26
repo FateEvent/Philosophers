@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/26 16:06:13 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/26 19:05:13 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ long		length_diff(long present, long past);
 long		get_the_time(void);
 long long	ft_get_time(t_sophist *philo);
 
-int			check_meals(t_man *rules);
-int			check_deaths(t_man *rules);
 int			death_note(t_sophist *philo);
 int			check_args(int argc, char *argv[]);
 

@@ -6,11 +6,11 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/07/13 16:27:13 by faventur         ###   ########.fr        #
+#    Updated: 2022/07/26 19:05:00 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_FILES = main.c libftools.c utils.c ft_check.c life.c death.c time.c happy_hour.c
+SRCS_FILES = main.c libftools.c ft_check.c life.c death.c time.c happy_hour.c
 
 SRCS_PATH = srcs/
 
