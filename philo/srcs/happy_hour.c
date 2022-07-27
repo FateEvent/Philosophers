@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 12:12:27 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:17:01 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:55:10 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	solitude(t_sophist *philo)
 	rules = philo->rules;
 	take_notes(philo, "has taken a fork");
 	countdown(philo, rules->time_to_die);
-//	gettimeofday(&now, NULL);
-//	pthread_mutex_lock(&rules->writing);
-//	printf("%lld %d %s\n", time_diff(&rules->start, &now)
-//		+ philo->rules->time_to_die, philo->id + 1, "died");
-//	pthread_mutex_unlock(&rules->writing);
 }
 
 void	happy_hour(t_sophist *philo, t_man *rules)

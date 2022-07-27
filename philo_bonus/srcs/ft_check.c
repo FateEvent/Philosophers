@@ -6,11 +6,18 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 18:19:05 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/15 15:31:23 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:53:44 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+static int	min_check(char *nptr)
+{
+	if (ft_atoi(nptr) < 1)
+		return (1);
+	return (0);
+}
 
 static int	ft_isdigit(int c)
 {
@@ -71,18 +78,19 @@ int	check_args(int argc, char *argv[])
 {
 	size_t	i;
 
+	i = 1;
+	while (argv[i])
+	{
+		if (!ft_strtolol(argv[i]) || !ft_isnumber(argv[i])
+			|| min_check(argv[i]))
+			return (ft_puterror("Error: Invalid arguments."));
+		i++;
+	}
 	if (argc < 5 || argc > 6)
 		return (ft_puterror("Error: The number of arguments is incorrect."));
 	if (ft_atoi(argv[1]) <= 0)
 		return (ft_puterror("Error: There are no philosophers."));
 	if (ft_atoi(argv[1]) > 200)
 		return (ft_puterror("Error: Program softcapped at 200 philosophers."));
-	i = 1;
-	while (argv[i])
-	{
-		if (!ft_strtolol(argv[i]) || !ft_isnumber(argv[i]))
-			return (ft_puterror("Error: Invalid arguments."));
-		i++;
-	}
 	return (0);
 }

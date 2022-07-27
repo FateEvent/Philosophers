@@ -6,24 +6,11 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/26 19:04:38 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:51:15 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	*the_policeman(void *rules)
-{
-	t_man	*ptr;
-
-	ptr = rules;
-	while (42)
-	{
-		if (death_note(ptr->pax))
-			sem_post(ptr->check);
-	}
-	return (NULL);
-}
 
 void	starting_block_ft(t_man *rules)
 {
@@ -51,15 +38,6 @@ void	starting_block_ft(t_man *rules)
 			usleep(rules->time_to_eat);
 		i++;
 	}
-}
-
-long long	ft_get_time(t_sophist *philo)
-{
-	long long	ms;
-
-	gettimeofday(&philo->tva, NULL);
-	ms = (philo->tva.tv_sec * (uint64_t)1000) + (philo->tva.tv_usec / 1000);
-	return (ms - philo->runtime);
 }
 
 void	launch(t_man *rules)
@@ -110,7 +88,6 @@ int	main(int argc, char *argv[])
 {
 	t_man	*rules;
 
-	// check min
 	if (!check_args(argc, argv))
 	{
 		rules = init_all(argv);
@@ -118,7 +95,6 @@ int	main(int argc, char *argv[])
 			return (1);
 		launch(rules);
 		sem_wait(rules->check);
-		printf("ciao\n");
 		the_end(rules);
 		return (0);
 	}

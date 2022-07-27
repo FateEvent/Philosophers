@@ -6,11 +6,24 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 10:39:52 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/26 18:33:53 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:50:04 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void	*the_policeman(void *rules)
+{
+	t_man	*ptr;
+
+	ptr = rules;
+	while (42)
+	{
+		if (death_note(ptr->pax))
+			sem_post(ptr->check);
+	}
+	return (NULL);
+}
 
 void	*wait_pid_end(void *rules)
 {

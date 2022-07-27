@@ -1,1 +1,10 @@
 # Philosophers, a classic programming problem
+
+The first program I created, called "philo", is implemented with the use of threads and mutexes.
+My strategy is based on the utilisation of a while loop (called by the check_end() function located in the main() function) checking, for each thread, "impersonating" a philosopher, that no more than "time_to_die" milliseconds have elapsed from the last time they have eaten (the time of the last meal is taken before a philosopher starts eating, just after the thread has gone through the mutexes in the eat() function).
+It's in the routine() function that I check if every philosopher has eaten the right amount of meals in the event that the parameter "number_of_times_each_philosopher_must_eat" is present.
+
+As concerning the second program, the "bonus" version, it makes use of fork() functions and semaphores, every philosopher being assigned to a process.
+In this case, I make use of a thread called by each child process to check how much time has elapsed since the philosopher's last meal and take action in case it has exceeded the time_to_die duration.
+In the philosopher_manage() function, a loop takes the count of each philosopher's meal and compares it with the amount to reach, in case the variable "number_of_times_each_philosopher_must_eat" is present.
+When a philosopher dies, or when everyone of them reaches the correct amount of meals, the "check" semaphore that restrains the main process from dying opens up, giving access to the function called "the_end()", where every child process is killed and the program is properly quit.

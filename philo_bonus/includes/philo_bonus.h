@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 12:06:01 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/26 19:05:13 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:50:37 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		solitude(t_sophist *philo);
 void		the_end(t_man *rules);
 
 void		*wait_pid_end(void *rules);
-void		*check_fate(void *rules);
+void		*the_policeman(void *rules);
 
 t_man		*init_all(char *argv[]);
 void		launch(t_man *ph);

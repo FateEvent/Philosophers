@@ -6,20 +6,20 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 15:26:09 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 13:49:51 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 14:00:15 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-** The time_diff() function calculates how much time has elapsed
-** between two points in time. It takes two timeval variables as
-** parameters.
+** The ft_get_time() function takes the time and returns the
+** duration (expressed as a long int) from the starting time
+** of the program and the present time.
 **
 ** The length_diff() function calculates the difference between
 ** two long integers expressing a duration in time.
 ** 
-** The get_the_time() functions transforms the values expressed as
-** a timeval variable into a long int.
+** The get_the_time() function takes the time and transforms the
+** values expressed as a timeval variable into a long int.
 ** 
 ** The countdown() function creates a duration in time. It also
 ** checks if the philosopher dies, by calling the death_note
@@ -27,6 +27,15 @@
 */
 
 #include "philo_bonus.h"
+
+long long	ft_get_time(t_sophist *philo)
+{
+	long long	ms;
+
+	gettimeofday(&philo->tva, NULL);
+	ms = (philo->tva.tv_sec * (uint64_t)1000) + (philo->tva.tv_usec / 1000);
+	return (ms - philo->runtime);
+}
 
 long	length_diff(long present, long past)
 {

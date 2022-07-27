@@ -6,7 +6,7 @@
 /*   By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 13:13:32 by faventur          #+#    #+#             */
-/*   Updated: 2022/07/17 12:46:47 by faventur         ###   ########.fr       */
+/*   Updated: 2022/07/27 13:55:21 by faventur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	main(int argc, char *argv[])
 	t_man	*rules;
 	int		i;
 
-	// check min
 	if (!check_args(argc, argv))
 	{
 		i = 0;
