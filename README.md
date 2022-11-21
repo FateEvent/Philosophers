@@ -11,7 +11,7 @@ When a philosopher dies, or when everyone of them reaches the correct amount of 
 
 For an interesting example of use of the threads in C, as well as some course notes on threads, see (in French):
 * <https://franckh.developpez.com/tutoriels/posix/pthreads/>;
-* <https://sites.uclouvain.be/SyllabusC/notes/Theorie/>;
+* <https://sites.uclouvain.be/SyllabusC/notes/Theorie/>.
 
 The CodeVault channel on Youtube offers a full video course on threads and processes in C with good examples and simple explanations:
 * <https://www.youtube.com/watch?v=IKG1P4rgm54&list=PLfqABt5AS4FmuQf70psXrsMLEDQXNkLq2>;
