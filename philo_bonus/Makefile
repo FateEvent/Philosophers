@@ -44,12 +44,9 @@ $(NAME): $(OBJS)
 	@echo "$(HIBLUE)Philosopher, c'est apprendre à mourir.$(NONE)"
 	@echo "Montaigne, $(CURSIVE)Les Essais$(NONE)"
 
-.c.o:
-	gcc $(FLAGS) $(LIBLINKS) -c $< -o ${<:.c=.o}
-
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c 
 	@mkdir -p $(dir $@)
-	${CC} ${CFLAGS} $(LIBLINKS) -c $< -o $@
+	${CC} ${FLAGS} $(LIBLINKS) -c $< -o $@
 
 clean:
 	@$(RM) -r $(OBJS_PATH)

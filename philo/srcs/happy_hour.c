@@ -14,8 +14,7 @@
 
 void	solitude(t_sophist *philo)
 {
-	struct timeval	now;
-	t_man			*rules;
+	t_man	*rules;
 
 	rules = philo->rules;
 	take_notes(philo, "has taken a fork");
