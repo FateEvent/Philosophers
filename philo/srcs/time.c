@@ -64,7 +64,6 @@ void	countdown(t_sophist *philo, long duration)
 	sec = philo->acting.tv_sec;
 	usec = philo->acting.tv_usec;
 	time = sec * 1000 + usec / 1000;
-	while (length_diff(get_the_time(), time) <= duration
-		&& !philo->rules->deaths)
+	while (length_diff(get_the_time(), time) <= duration)
 		usleep(50);
 }

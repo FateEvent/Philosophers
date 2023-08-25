@@ -24,6 +24,8 @@ void	launch(t_man *rules)
 		if (pthread_create(&rules->pax[i]->pt, NULL,
 				&routine, rules->pax[i]) != 0)
 			ft_puterror("Error: Failed to create the thread.");
+        if (pthread_detach(rules->pax[i]->pt))
+            ft_puterror("Error: Failed to detach the thread.");
 		i++;
 	}
 }

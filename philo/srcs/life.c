@@ -26,8 +26,8 @@ void	take_notes(t_sophist *philo, char *msg)
 
 void	ft_sleep(t_sophist *philo)
 {
-	if (philo->rules->deaths)
-		return ;
+	// if (philo->rules->deaths)
+	// 	return ;
 	take_notes(philo, "is sleeping");
 	gettimeofday(&philo->acting, NULL);
 	countdown(philo, philo->rules->time_to_sleep);
@@ -35,8 +35,8 @@ void	ft_sleep(t_sophist *philo)
 
 void	think(t_sophist *philo)
 {
-	if (philo->rules->deaths)
-		return ;
+	// if (philo->rules->deaths)
+	// 	return ;
 	take_notes(philo, "is thinking");
 }
 
@@ -45,15 +45,15 @@ void	eat(t_sophist *philo)
 	t_man	*rules;
 
 	rules = philo->rules;
-	if (philo->rules->deaths)
-		return ;
+	// if (philo->rules->deaths)
+	// 	return ;
 	pthread_mutex_lock(&rules->forks[philo->left_fork]);
-	if (philo->rules->deaths)
-		return ;
+	// if (philo->rules->deaths)
+	// 	return ;
 	take_notes(philo, "has taken a fork");
 	pthread_mutex_lock(&rules->forks[philo->right_fork]);
-	if (philo->rules->deaths)
-		return ;
+	// if (philo->rules->deaths)
+	// 	return ;
 	take_notes(philo, "has taken a fork");
 	gettimeofday(&philo->last_meal, NULL);
 	philo->meals_num++;

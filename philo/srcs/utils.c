@@ -31,8 +31,8 @@ int	check_meals(t_sophist *philo)
 	cmp = philo->rules->num_of_meals;
 	if (philo->meals_num <= cmp)
 		return (0);
-	else
-		philo->rules->deaths = 1;
+	// else
+	// 	philo->rules->deaths = 1;
 	return (1);
 }
 
@@ -47,8 +47,11 @@ void	check_end(t_man *rules)
 		gettimeofday(&now, NULL);
 		if (time_diff(&rules->pax[i]->last_meal, &now)
 			> rules->time_to_die)
+        {
 			death_note(rules->pax[i]);
-		if (i == rules->tot - 1)
+            break ;
+        }
+        if (i == rules->tot - 1)
 			i = -1;
 		i++;
 	}

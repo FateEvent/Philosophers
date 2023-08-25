@@ -19,14 +19,12 @@ void	the_end(t_man *rules)
 	i = 0;
 	while (i < rules->tot)
 	{
-		pthread_join(rules->pax[i]->pt, NULL);
 		pthread_mutex_destroy(&rules->forks[i]);
 		free(rules->pax[i]);
 		rules->pax[i] = NULL;
 		i++;
 	}
 	free(rules->forks);
-	rules->forks = NULL;
 	free(rules);
 	rules = NULL;
 }
@@ -38,9 +36,11 @@ int	death_note(t_sophist *philo)
 	gettimeofday(&now, NULL);
 	if (time_diff(&philo->last_meal, &now) > philo->rules->time_to_die)
 	{
-		philo->dead = 1;
-		philo->rules->deaths = 1;
-		take_notes(philo, "died");
+		// philo->dead = 1;
+		// philo->rules->deaths = 1;
+		pthread_mutex_lock(&philo->rules->writing);
+		gettimeofday(&now, NULL);
+		printf("%ld %d %s\n", time_diff(&philo->rules->start, &now), philo->id + 1, "died");
 		return (1);
 	}
 	return (0);
