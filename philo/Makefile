@@ -6,7 +6,7 @@
 #    By: faventur <faventur@student.42mulhouse.fr>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/16 11:47:12 by faventur          #+#    #+#              #
-#    Updated: 2022/07/13 16:27:34 by faventur         ###   ########.fr        #
+#    Updated: 2024/03/16 10:18:55 by faventur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS_PATH = bin/
 
 OBJS = 	$(addprefix $(OBJS_PATH), $(SRCS_FILES:.c=.o))
 
-FLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
+FLAGS = -Wall -Wextra -Werror
 
 LIBLINKS = -I./includes
 
